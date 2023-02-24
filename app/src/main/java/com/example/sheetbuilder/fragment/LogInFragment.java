@@ -1,6 +1,7 @@
 package com.example.sheetbuilder.fragment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.AndroidViewModel;
 
 import com.example.sheetbuilder.R;
+import com.example.sheetbuilder.activity.HomepageActivity;
+
 import timber.log.Timber;
 
 public class LogInFragment extends Fragment implements View.OnClickListener {
@@ -59,7 +62,8 @@ public class LogInFragment extends Fragment implements View.OnClickListener {
         }else if(vId == R.id.clear_button){
             //clear
         }else if(vId==R.id.exit_button){
-            //exit
+            startActivity(new Intent(activity, HomepageActivity.class));
+            activity.finish();
         }
     }
 
