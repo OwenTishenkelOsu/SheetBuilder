@@ -13,14 +13,18 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.AndroidViewModel;
 
 import com.example.sheetbuilder.R;
+import timber.log.Timber;
 
 public class LogInFragment extends Fragment implements View.OnClickListener {
     private EditText mUsername;
     private EditText mPassword;
     private AndroidViewModel mVm;
+    private final String TAG = getClass().getSimpleName();
 
     public View onCreateView(@NonNull LayoutInflater inf, ViewGroup c, Bundle savedInstanceState){
         View v;
+        //Timber.plant(new Timber.DebugTree());
+        Timber.tag(TAG).d("onCreateView()");
         Activity activity = requireActivity();
 
         v = inf.inflate(R.layout.login_fragment, c, false);
@@ -48,6 +52,8 @@ public class LogInFragment extends Fragment implements View.OnClickListener {
         final Activity activity = requireActivity();
         final int vId = view.getId();
 
+        Timber.tag(TAG).d("Received button click!");
+
         if(vId==R.id.new_account_button){
             //new account
         }else if(vId == R.id.clear_button){
@@ -55,5 +61,13 @@ public class LogInFragment extends Fragment implements View.OnClickListener {
         }else if(vId==R.id.exit_button){
             //exit
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Timber.tag(TAG).d("onDestroyView()");
+        mUsername = null;
+        mPassword = null;
     }
 }
