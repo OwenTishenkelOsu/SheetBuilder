@@ -20,7 +20,7 @@ public class HomepageFragment extends Fragment implements View.OnClickListener {
 
     public View onCreateView(@NonNull LayoutInflater inf, ViewGroup c, Bundle savedInstanceState){
         View v;
-        //Timber.plant(new Timber.DebugTree());
+
         Timber.tag(TAG).d("onCreateView()");
         Activity activity = requireActivity();
 
