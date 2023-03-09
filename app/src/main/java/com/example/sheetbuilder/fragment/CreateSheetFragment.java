@@ -1,26 +1,33 @@
 package com.example.sheetbuilder.fragment;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.sheetbuilder.R;
-import com.example.sheetbuilder.activity.CreateSheetActivity;
-import com.example.sheetbuilder.activity.HomepageActivity;
-import com.example.sheetbuilder.activity.OpenSheetActivity;
 
 import timber.log.Timber;
 
-public class HomepageFragment extends Fragment implements View.OnClickListener {
+public class CreateSheetFragment extends Fragment implements View.OnClickListener {
 
     private final String TAG = getClass().getSimpleName();
+    private EditText sheetname;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
 
     public View onCreateView(@NonNull LayoutInflater inf, ViewGroup c, Bundle savedInstanceState){
         View v;
@@ -28,23 +35,19 @@ public class HomepageFragment extends Fragment implements View.OnClickListener {
         Timber.tag(TAG).d("onCreateView()");
         Activity activity = requireActivity();
 
-        v = inf.inflate(R.layout.homepage_fragment, c, false);
+        v = inf.inflate(R.layout.create_sheet_fragment, c, false);
+
+        sheetname = v.findViewById(R.id.sheet_name);
+
+        String[] temps = {"item1", "item2", "item3", "item4"};
+        ArrayAdapter<String> t;
+        t = new ArrayAdapter<String>(v.getContext(), R.layout.simple_list_item_1, temps);
+        ListView list = v.findViewById(R.id.list_view);
+        list.setAdapter(t);
 
         final Button createSheetButton = v.findViewById(R.id.create_sheet_button);
-        if(createSheetButton!=null){
+        if(createSheetButton!= null){
             createSheetButton.setOnClickListener(this);
-        }
-        final Button openSheetButton = v.findViewById(R.id.open_sheet_button);
-        if(openSheetButton!=null){
-            openSheetButton.setOnClickListener(this);
-        }
-        final Button openTemplateButton = v.findViewById(R.id.open_template_button);
-        if(openTemplateButton!= null){
-            openTemplateButton.setOnClickListener(this);
-        }
-        final Button createTemplateButton = v.findViewById(R.id.create_template_button);
-        if(createTemplateButton!= null){
-            createTemplateButton.setOnClickListener(this);
         }
         return v;
     }
@@ -57,15 +60,7 @@ public class HomepageFragment extends Fragment implements View.OnClickListener {
         Timber.tag(TAG).d("Received button click!");
 
         if(vId==R.id.create_sheet_button){
-            startActivity(new Intent(activity, CreateSheetActivity.class));
-            activity.finish();
-        }else if(vId == R.id.open_sheet_button){
-            startActivity(new Intent(activity, OpenSheetActivity.class));
-            activity.finish();
-        }else if(vId==R.id.open_template_button){
-            //open template
-        }else if(vId== R.id.create_template_button){
-            //create template
+            //new account
         }
     }
 

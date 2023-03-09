@@ -31,4 +31,34 @@ public class HomepageActivity extends AppCompatActivity {
             fm.beginTransaction().add(R.id.container, frag).commit();
         }
     }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        Timber.tag(TAG).d("OnStart()");
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        Timber.tag(TAG).d("OnResume()");
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        Timber.tag(TAG).d("OnPause()");
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+        Timber.tag(TAG).d("OnStop()");
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        Timber.tag(TAG).d("OnDestroy()");
+    }
 }

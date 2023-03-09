@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LifecycleOwner;
 
 import com.example.sheetbuilder.R;
 import com.example.sheetbuilder.activity.HomepageActivity;
@@ -60,6 +61,7 @@ public class LogInFragment extends Fragment implements View.OnClickListener {
 
     }
 
+    @Override
     public View onCreateView(@NonNull LayoutInflater inf, ViewGroup c, Bundle savedInstanceState){
         View v;
 
@@ -151,5 +153,37 @@ public class LogInFragment extends Fragment implements View.OnClickListener {
         Timber.tag(TAG).d("onDestroyView()");
         mUsername = null;
         mPassword = null;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Timber.tag(TAG).d("onDestroy()");
+        final Activity activity = requireActivity();
+        //mUserAccountViewModel.getAllUserAccounts().removeObservers((LifecycleOwner) activity);
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        Timber.tag(TAG).d("OnStart()");
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        Timber.tag(TAG).d("OnResume()");
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        Timber.tag(TAG).d("OnPause()");
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        Timber.tag(TAG).d("OnStop()");
     }
 }
