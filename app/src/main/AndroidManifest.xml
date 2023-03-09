@@ -32,6 +32,8 @@
         <activity android:name=".activity.HomepageActivity" />
         <activity android:name=".activity.CreateSheetActivity" />
         <activity android:name=".activity.OpenSheetActivity" />
+        <activity android:name=".activity.OpenTemplateActivity" />
+        <activity android:name=".activity.CreateTemplateActivity" />
     </application>
 
 </manifest>

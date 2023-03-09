@@ -13,8 +13,10 @@ import androidx.fragment.app.Fragment;
 
 import com.example.sheetbuilder.R;
 import com.example.sheetbuilder.activity.CreateSheetActivity;
+import com.example.sheetbuilder.activity.CreateTemplateActivity;
 import com.example.sheetbuilder.activity.HomepageActivity;
 import com.example.sheetbuilder.activity.OpenSheetActivity;
+import com.example.sheetbuilder.activity.OpenTemplateActivity;
 
 import timber.log.Timber;
 
@@ -63,9 +65,11 @@ public class HomepageFragment extends Fragment implements View.OnClickListener {
             startActivity(new Intent(activity, OpenSheetActivity.class));
             activity.finish();
         }else if(vId==R.id.open_template_button){
-            //open template
+            startActivity(new Intent(activity, OpenTemplateActivity.class));
+            activity.finish();
         }else if(vId== R.id.create_template_button){
-            //create template
+            startActivity(new Intent(activity, CreateTemplateActivity.class));
+            activity.finish();
         }
     }
 
