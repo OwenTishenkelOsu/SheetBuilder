@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,7 +15,7 @@
         android:theme="@style/Theme.SheetBuilder"
         tools:targetApi="31">
         <activity
-            android:name=".activity.LogInActivity"
+            android:name=".ui.ui.activity.LogInActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.SheetBuilder.NoActionBar">
@@ -27,6 +29,11 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity android:name=".ui.ui.activity.HomepageActivity" />
+        <activity android:name=".ui.ui.activity.CreateSheetActivity" />
+        <activity android:name=".ui.ui.activity.OpenSheetActivity" />
+        <activity android:name=".ui.ui.activity.OpenTemplateActivity" />
+        <activity android:name=".ui.ui.activity.CreateTemplateActivity" />
     </application>
 
 </manifest>

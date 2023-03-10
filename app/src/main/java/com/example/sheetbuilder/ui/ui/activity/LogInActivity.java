@@ -1,4 +1,4 @@
-package com.example.sheetbuilder.activity;
+package com.example.sheetbuilder.ui.ui.activity;
 
 import android.os.Bundle;
 
@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.sheetbuilder.R;
-import com.example.sheetbuilder.fragment.LogInFragment;
+import com.example.sheetbuilder.ui.ui.fragment.LogInFragment;
 
 import timber.log.Timber;
 
@@ -29,5 +29,35 @@ public class LogInActivity extends AppCompatActivity {
             frag = new LogInFragment();
             fm.beginTransaction().add(R.id.container, frag).commit();
         }
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        Timber.tag(TAG).d("OnStart()");
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        Timber.tag(TAG).d("OnResume()");
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        Timber.tag(TAG).d("OnPause()");
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+        Timber.tag(TAG).d("OnStop()");
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        Timber.tag(TAG).d("OnDestroy()");
     }
 }
