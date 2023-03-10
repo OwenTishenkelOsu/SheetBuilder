@@ -1,4 +1,4 @@
-package com.example.sheetbuilder.activity;
+package com.example.sheetbuilder.ui.ui.activity;
 
 import android.os.Bundle;
 
@@ -7,8 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.sheetbuilder.R;
-import com.example.sheetbuilder.fragment.HomepageFragment;
-import com.example.sheetbuilder.fragment.LogInFragment;
+import com.example.sheetbuilder.ui.ui.fragment.HomepageFragment;
 
 import timber.log.Timber;
 public class HomepageActivity extends AppCompatActivity {

@@ -1,4 +1,4 @@
-package com.example.sheetbuilder.fragment;
+package com.example.sheetbuilder.ui.ui.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -20,7 +19,7 @@ import com.example.sheetbuilder.R;
 
 import timber.log.Timber;
 
-public class OpenSheetFragment extends Fragment implements View.OnClickListener {
+public class OpenTemplateFragment extends Fragment implements View.OnClickListener {
 
     private final String TAG = getClass().getSimpleName();
 
@@ -36,7 +35,7 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
         Timber.tag(TAG).d("onCreateView()");
         Activity activity = requireActivity();
 
-        v = inf.inflate(R.layout.open_sheet_fragment, c, false);
+        v = inf.inflate(R.layout.open_template_fragment, c, false);
 
         String[] temps = {"item1", "item2", "item3", "item4"};
         ArrayAdapter<String> t;
@@ -44,13 +43,9 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
         ListView list = v.findViewById(R.id.list_view);
         list.setAdapter(t);
 
-        final Button selectSheetButton = v.findViewById(R.id.select_sheet_button);
-        if(selectSheetButton!= null){
-            selectSheetButton.setOnClickListener(this);
-        }
-        final Button deleteSheetButton = v.findViewById(R.id.delete_sheet_button);
-        if(deleteSheetButton!= null){
-            deleteSheetButton.setOnClickListener(this);
+        final Button openTemplateButton = v.findViewById(R.id.open_template_button);
+        if(openTemplateButton!= null){
+            openTemplateButton.setOnClickListener(this);
         }
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -60,8 +55,7 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
                 view.setSelected(true);
             }
         });
-
-
+        
         return v;
     }
 
@@ -72,9 +66,7 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
 
         Timber.tag(TAG).d("Received button click!");
 
-        if(vId==R.id.select_sheet_button){
-            //new account
-        }else if(vId==R.id.delete_sheet_button){
+        if(vId==R.id.open_template_button){
             //new account
         }
     }

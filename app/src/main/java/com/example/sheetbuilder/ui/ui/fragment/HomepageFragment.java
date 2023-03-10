@@ -1,4 +1,4 @@
-package com.example.sheetbuilder.fragment;
+package com.example.sheetbuilder.ui.ui.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,11 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.sheetbuilder.R;
-import com.example.sheetbuilder.activity.CreateSheetActivity;
-import com.example.sheetbuilder.activity.CreateTemplateActivity;
-import com.example.sheetbuilder.activity.HomepageActivity;
-import com.example.sheetbuilder.activity.OpenSheetActivity;
-import com.example.sheetbuilder.activity.OpenTemplateActivity;
+import com.example.sheetbuilder.ui.ui.activity.CreateSheetActivity;
+import com.example.sheetbuilder.ui.ui.activity.CreateTemplateActivity;
+import com.example.sheetbuilder.ui.ui.activity.OpenSheetActivity;
+import com.example.sheetbuilder.ui.ui.activity.OpenTemplateActivity;
 
 import timber.log.Timber;
 

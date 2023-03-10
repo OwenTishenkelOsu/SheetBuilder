@@ -1,24 +1,19 @@
-package com.example.sheetbuilder.activity;
+package com.example.sheetbuilder.ui.ui.activity;
+
+import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import android.os.Bundle;
-
 import com.example.sheetbuilder.R;
-import com.example.sheetbuilder.fragment.CreateSheetFragment;
-import com.example.sheetbuilder.fragment.CreateTemplateFragment;
-import com.example.sheetbuilder.fragment.HomepageFragment;
-import com.example.sheetbuilder.fragment.OpenSheetFragment;
-import com.example.sheetbuilder.fragment.OpenTemplateFragment;
+import com.example.sheetbuilder.ui.ui.fragment.LogInFragment;
 
 import timber.log.Timber;
 
-public class CreateTemplateActivity extends AppCompatActivity {
+public class LogInActivity extends AppCompatActivity {
 
     private final String TAG = getClass().getSimpleName();
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -31,7 +26,7 @@ public class CreateTemplateActivity extends AppCompatActivity {
         Fragment frag = fm.findFragmentById(R.id.container);
 
         if (frag == null) {
-            frag = new CreateTemplateFragment();
+            frag = new LogInFragment();
             fm.beginTransaction().add(R.id.container, frag).commit();
         }
     }

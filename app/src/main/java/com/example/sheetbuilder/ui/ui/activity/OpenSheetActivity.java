@@ -1,4 +1,4 @@
-package com.example.sheetbuilder.activity;
+package com.example.sheetbuilder.ui.ui.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -7,9 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import android.os.Bundle;
 
 import com.example.sheetbuilder.R;
-import com.example.sheetbuilder.fragment.CreateSheetFragment;
-import com.example.sheetbuilder.fragment.HomepageFragment;
-import com.example.sheetbuilder.fragment.OpenSheetFragment;
+import com.example.sheetbuilder.ui.ui.fragment.OpenSheetFragment;
 
 import timber.log.Timber;
 

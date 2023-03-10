@@ -1,4 +1,4 @@
-package com.example.sheetbuilder.fragment;
+package com.example.sheetbuilder.ui.ui.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -20,9 +20,10 @@ import com.example.sheetbuilder.R;
 
 import timber.log.Timber;
 
-public class OpenTemplateFragment extends Fragment implements View.OnClickListener {
+public class CreateSheetFragment extends Fragment implements View.OnClickListener {
 
     private final String TAG = getClass().getSimpleName();
+    private EditText sheetname;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,18 +37,15 @@ public class OpenTemplateFragment extends Fragment implements View.OnClickListen
         Timber.tag(TAG).d("onCreateView()");
         Activity activity = requireActivity();
 
-        v = inf.inflate(R.layout.open_template_fragment, c, false);
+        v = inf.inflate(R.layout.create_sheet_fragment, c, false);
+
+        sheetname = v.findViewById(R.id.sheet_name);
 
         String[] temps = {"item1", "item2", "item3", "item4"};
         ArrayAdapter<String> t;
         t = new ArrayAdapter<String>(v.getContext(), R.layout.simple_list_item_1, temps);
         ListView list = v.findViewById(R.id.list_view);
         list.setAdapter(t);
-
-        final Button openTemplateButton = v.findViewById(R.id.open_template_button);
-        if(openTemplateButton!= null){
-            openTemplateButton.setOnClickListener(this);
-        }
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
@@ -56,7 +54,11 @@ public class OpenTemplateFragment extends Fragment implements View.OnClickListen
                 view.setSelected(true);
             }
         });
-        
+
+        final Button createSheetButton = v.findViewById(R.id.create_sheet_button);
+        if(createSheetButton!= null){
+            createSheetButton.setOnClickListener(this);
+        }
         return v;
     }
 
@@ -67,7 +69,7 @@ public class OpenTemplateFragment extends Fragment implements View.OnClickListen
 
         Timber.tag(TAG).d("Received button click!");
 
-        if(vId==R.id.open_template_button){
+        if(vId==R.id.create_sheet_button){
             //new account
         }
     }

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "643433628655",
+    "firebase_url": "https://sheetbuilder-8ec99-default-rtdb.firebaseio.com",
+    "project_id": "sheetbuilder-8ec99",
+    "storage_bucket": "sheetbuilder-8ec99.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:643433628655:android:84ef8924b685bbe9aeac1a",
+        "android_client_info": {
+          "package_name": "com.example.sheetbuilder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "643433628655-0mng2dunebc9k85lu3lm7b5fmg050u2t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyI6ayuOes3WTG0OUvaIXQXou_f9UV5Yg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "643433628655-0mng2dunebc9k85lu3lm7b5fmg050u2t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

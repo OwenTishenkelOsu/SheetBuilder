@@ -1,15 +1,13 @@
-package com.example.sheetbuilder.fragment;
+package com.example.sheetbuilder.ui.ui.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ScrollView;
 
 import androidx.annotation.NonNull;
@@ -19,10 +17,7 @@ import androidx.fragment.app.Fragment;
 import com.example.sheetbuilder.R;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 import timber.log.Timber;
 
