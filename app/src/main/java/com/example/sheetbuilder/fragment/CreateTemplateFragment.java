@@ -63,6 +63,7 @@ public class CreateTemplateFragment extends Fragment implements View.OnClickList
         if(saveTemplateButton!= null){
             saveTemplateButton.setOnClickListener(this);
         }
+
         return v;
     }
 
