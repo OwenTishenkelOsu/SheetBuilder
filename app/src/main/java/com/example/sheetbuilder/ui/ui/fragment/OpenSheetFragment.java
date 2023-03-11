@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
 
 import com.example.sheetbuilder.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,6 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import model.Sheet;
+import model.viewmodel.SheetViewModel;
 import timber.log.Timber;
 
 
@@ -36,46 +39,27 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
 
     private final String TAG = getClass().getSimpleName();
     FirebaseFirestore db;
-    Task<QuerySnapshot> mTask;
-    List<String> names;
+    List<Sheet> mSheetList;
+    SheetViewModel mSheetViewModel;
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Activity activity = requireActivity();
+        mSheetViewModel = new SheetViewModel(activity.getApplication());
+        mSheetViewModel.getAllSheets();
     }
 
     public View onCreateView(@NonNull LayoutInflater inf, ViewGroup c, Bundle savedInstanceState){
         View v;
 
         db = FirebaseFirestore.getInstance();
-        names = new ArrayList<String>();
+        //names = new ArrayList<String>();
 
-        db.collection("sheet").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    mTask = task;
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        Log.d(TAG, document.getId() + " => " + document.getData());
-                        String s;
-                        for(Map.Entry e:document.getData().entrySet()){
-                            s = e.getValue().toString();
-                            Log.d(TAG, s);
-                        }
-                    }
-                } else {
-                    Log.w(TAG, "Error getting documents.", task.getException());
-                }
-            }
-        });
+        Sheet sheet;
 
 
-
-        for(String e:names){
-            Timber.tag(TAG).d("LOG" + e);
-        }
         Activity activity = requireActivity();
 
         v = inf.inflate(R.layout.open_sheet_fragment, c, false);
@@ -101,8 +85,9 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Toast.makeText(getContext(), parent.getItemIdAtPosition(position) + "is selected", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getContext(), parent.getItemIdAtPosition(position) + "is selected", Toast.LENGTH_LONG).show();
                 view.setSelected(true);
+                Timber.tag(TAG).d("clicking " + parent.getItemIdAtPosition(position));
             }
         });
 
@@ -110,9 +95,6 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
         return v;
     }
 
-    public void populateList(String s){
-        names.add(s);
-    }
 
     @Override
     public void onClick(View view){
