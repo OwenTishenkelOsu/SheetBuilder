@@ -19,10 +19,10 @@ public class SheetViewModel extends AndroidViewModel {
         mRepository = new SheetRepository(app);
         mAllSheetData = new SheetLiveData(app);
     }
-    public SheetLiveData getAllSheets(){
+    public List<Sheet> getAllSheets(){
         List<Sheet> mAllSheetsList = mRepository.getAllSheets();
         mAllSheetData.setValue(mAllSheetsList);
         assert(mAllSheetData.getValue()!=null);
-        return mAllSheetData;
+        return mAllSheetsList;
     }
 }
