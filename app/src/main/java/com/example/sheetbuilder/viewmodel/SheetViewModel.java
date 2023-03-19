@@ -1,4 +1,4 @@
-package model.viewmodel;
+package com.example.sheetbuilder.viewmodel;
 
 import android.app.Application;
 
@@ -6,9 +6,9 @@ import androidx.lifecycle.AndroidViewModel;
 
 import java.util.List;
 
-import model.Sheet;
-import model.SheetLiveData;
-import model.SheetRepository;
+import com.example.sheetbuilder.model.Sheet;
+import com.example.sheetbuilder.model.SheetLiveData;
+import com.example.sheetbuilder.repository.SheetRepository;
 
 public class SheetViewModel extends AndroidViewModel {
     private final SheetRepository mRepository;

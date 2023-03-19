@@ -1,14 +1,16 @@
-package com.example.sheetbuilder.ui.ui.fragment;
+package com.example.sheetbuilder.ui.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,18 +18,12 @@ import androidx.fragment.app.Fragment;
 
 import com.example.sheetbuilder.R;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import timber.log.Timber;
 
-public class CreateTemplateFragment extends Fragment implements View.OnClickListener {
+public class CreateSheetFragment extends Fragment implements View.OnClickListener {
 
     private final String TAG = getClass().getSimpleName();
-    private EditText templatename;
-    private ScrollView sv;
-    private List<EditText> editTexts;
-    private LinearLayout l;
+    private EditText sheetname;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,30 +31,34 @@ public class CreateTemplateFragment extends Fragment implements View.OnClickList
 
     }
 
-    @Override
     public View onCreateView(@NonNull LayoutInflater inf, ViewGroup c, Bundle savedInstanceState){
         View v;
 
         Timber.tag(TAG).d("onCreateView()");
         Activity activity = requireActivity();
 
-        v = inf.inflate(R.layout.create_template_fragment, c, false);
+        v = inf.inflate(R.layout.create_sheet_fragment, c, false);
 
-        sv = v.findViewById(R.id.scroll_view);
-        l = v.findViewById(R.id.list);
-        editTexts = new ArrayList<EditText>();
+        sheetname = v.findViewById(R.id.sheet_name);
 
-        templatename = v.findViewById(R.id.template_name);
+        String[] temps = {"item1", "item2", "item3", "item4"};
+        ArrayAdapter<String> t;
+        t = new ArrayAdapter<String>(v.getContext(), R.layout.simple_list_item_1, temps);
+        ListView list = v.findViewById(R.id.list_view);
+        list.setAdapter(t);
 
-        final Button addElementButton = v.findViewById(R.id.add_element_button);
-        if(addElementButton!= null){
-            addElementButton.setOnClickListener(this);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Toast.makeText(getContext(), parent.getItemIdAtPosition(position) + "is selected", Toast.LENGTH_LONG).show();
+                view.setSelected(true);
+            }
+        });
+
+        final Button createSheetButton = v.findViewById(R.id.create_sheet_button);
+        if(createSheetButton!= null){
+            createSheetButton.setOnClickListener(this);
         }
-        final Button saveTemplateButton = v.findViewById(R.id.save_template_button);
-        if(saveTemplateButton!= null){
-            saveTemplateButton.setOnClickListener(this);
-        }
-
         return v;
     }
 
@@ -69,20 +69,9 @@ public class CreateTemplateFragment extends Fragment implements View.OnClickList
 
         Timber.tag(TAG).d("Received button click!");
 
-        if(vId==R.id.add_element_button){
-            addEditText();
-        }else if(vId==R.id.save_template_button){
-            //save to db
+        if(vId==R.id.create_sheet_button){
+            //new account
         }
-    }
-
-    void addEditText(){
-        EditText et = new EditText(getContext());
-        et.setText("New Element");
-        ViewGroup.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        et.setLayoutParams(params);
-        editTexts.add(et);
-        l.addView(et);
     }
 
     @Override

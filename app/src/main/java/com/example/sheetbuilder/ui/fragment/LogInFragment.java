@@ -1,4 +1,4 @@
-package com.example.sheetbuilder.ui.ui.fragment;
+package com.example.sheetbuilder.ui.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -16,7 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.AndroidViewModel;
 
 import com.example.sheetbuilder.R;
-import com.example.sheetbuilder.ui.ui.activity.HomepageActivity;
+import com.example.sheetbuilder.ui.activity.HomepageActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;

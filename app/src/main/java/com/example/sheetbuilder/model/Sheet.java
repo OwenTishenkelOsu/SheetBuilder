@@ -1,4 +1,4 @@
-package model;
+package com.example.sheetbuilder.model;
 
 import timber.log.Timber;
 

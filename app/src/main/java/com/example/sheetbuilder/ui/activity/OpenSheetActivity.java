@@ -1,16 +1,17 @@
-package com.example.sheetbuilder.ui.ui.activity;
-
-import android.os.Bundle;
+package com.example.sheetbuilder.ui.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.os.Bundle;
+
 import com.example.sheetbuilder.R;
-import com.example.sheetbuilder.ui.ui.fragment.HomepageFragment;
+import com.example.sheetbuilder.ui.fragment.OpenSheetFragment;
 
 import timber.log.Timber;
-public class HomepageActivity extends AppCompatActivity {
+
+public class OpenSheetActivity extends AppCompatActivity {
 
     private final String TAG = getClass().getSimpleName();
 
@@ -26,7 +27,7 @@ public class HomepageActivity extends AppCompatActivity {
         Fragment frag = fm.findFragmentById(R.id.container);
 
         if (frag == null) {
-            frag = new HomepageFragment();
+            frag = new OpenSheetFragment();
             fm.beginTransaction().add(R.id.container, frag).commit();
         }
     }
