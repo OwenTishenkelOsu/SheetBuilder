@@ -39,6 +39,16 @@ public class SheetRepository {
         return mSheetList;
     }
 
+    public void deleteSheet(){
+
+    }
+    public void createSheet(){
+
+    }
+    public void renameSheet(){
+
+    }
+
     public void loadSheets(final VolleyCallBack callBack){
 
         ContentResolver resolver = mContext.getContentResolver();

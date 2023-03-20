@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -39,6 +40,7 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
 
     private SheetAdapter mSheetAdapter;
     private RecyclerView mSheetRecyclerView;
+    private EditText sheetname;
 
 
     @Override
@@ -66,11 +68,12 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
 
 
 
-        ArrayAdapter<String> t;
+        /*ArrayAdapter<String> t;
         t = new ArrayAdapter<String>(v.getContext(), R.layout.simple_list_item_1, temps);
         ListView list = v.findViewById(R.id.list_view);
-        list.setAdapter(t);
+        list.setAdapter(t);*/
 
+        sheetname = v.findViewById(R.id.sheet_name);
         final Button selectSheetButton = v.findViewById(R.id.select_sheet_button);
         if(selectSheetButton!= null){
             selectSheetButton.setOnClickListener(this);
@@ -79,15 +82,23 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
         if(deleteSheetButton!= null){
             deleteSheetButton.setOnClickListener(this);
         }
+        final Button createSheetButton = v.findViewById(R.id.create_sheet_button);
+        if(createSheetButton!= null){
+            createSheetButton.setOnClickListener(this);
+        }
+        final Button renameSheetButton = v.findViewById(R.id.rename_sheet_button);
+        if(renameSheetButton!= null){
+            renameSheetButton.setOnClickListener(this);
+        }
 
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 //Toast.makeText(getContext(), parent.getItemIdAtPosition(position) + "is selected", Toast.LENGTH_LONG).show();
                 view.setSelected(true);
                 Timber.tag(TAG).d("clicking " + parent.getItemIdAtPosition(position));
             }
-        });
+        });*/
 
         Timber.tag(TAG).d("COMPLETED CREATEVIEW");
         return v;
@@ -114,6 +125,10 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
         }else if(vId==R.id.delete_sheet_button){
             //new account
         }else if(vId == R.id.sheet_recycler_view) {
+
+        }else if(vId == R.id.create_sheet_button){
+
+        }else if(vId==R.id.rename_sheet_button){
 
         }
     }
@@ -162,8 +177,10 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
 
     private static class SheetHolder extends RecyclerView.ViewHolder {
         private final TextView mSheetTextView;
+        View v;
         SheetHolder(LayoutInflater inf, ViewGroup parent){
             super(inf.inflate(R.layout.sheet_list_item, parent, false));
+
             mSheetTextView = itemView.findViewById(R.id.sheet_info);
         }
         void bind(Sheet sheet){
