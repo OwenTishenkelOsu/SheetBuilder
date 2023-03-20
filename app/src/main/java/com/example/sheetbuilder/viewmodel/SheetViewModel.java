@@ -11,7 +11,7 @@ import com.example.sheetbuilder.model.SheetLiveData;
 import com.example.sheetbuilder.repository.SheetRepository;
 
 public class SheetViewModel extends AndroidViewModel {
-    private final SheetRepository mRepository;
+    public final SheetRepository mRepository;
     private final SheetLiveData mAllSheetData;
 
     public SheetViewModel(Application app){

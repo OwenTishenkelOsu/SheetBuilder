@@ -8,6 +8,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.sheetbuilder.VolleyCallBack;
 import com.example.sheetbuilder.model.Sheet;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -33,13 +34,12 @@ public class SheetRepository {
     public SheetRepository(Application app){
         mContext = app;
         db = FirebaseFirestore.getInstance();
-        loadSheets();
     }
     public List<Sheet> getAllSheets(){
         return mSheetList;
     }
 
-    private void loadSheets(){
+    public void loadSheets(final VolleyCallBack callBack){
 
         ContentResolver resolver = mContext.getContentResolver();
 
@@ -56,6 +56,7 @@ public class SheetRepository {
                             mSheetList.add(new Sheet(s));
                             Log.d(TAG, "In sheet load" + mSheetList);
                         }
+                        callBack.onSuccess();
                     }
                 } else {
                     Log.w(TAG, "Error getting documents.", task.getException());

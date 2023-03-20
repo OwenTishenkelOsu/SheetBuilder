@@ -33,6 +33,7 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
 
     private final String TAG = getClass().getSimpleName();
     FirebaseFirestore db;
+
     List<Sheet> mSheetList;
     SheetViewModel mSheetViewModel;
 
@@ -45,7 +46,7 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         Activity activity = requireActivity();
         mSheetViewModel = new SheetViewModel(activity.getApplication());
-        mSheetViewModel.getAllSheets();
+        mSheetViewModel.mRepository.loadSheets(()-> showSheets());
     }
 
     public View onCreateView(@NonNull LayoutInflater inf, ViewGroup c, Bundle savedInstanceState){
@@ -112,6 +113,8 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
             //new account
         }else if(vId==R.id.delete_sheet_button){
             //new account
+        }else if(vId == R.id.sheet_recycler_view) {
+
         }
     }
 
@@ -160,8 +163,8 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
     private static class SheetHolder extends RecyclerView.ViewHolder {
         private final TextView mSheetTextView;
         SheetHolder(LayoutInflater inf, ViewGroup parent){
-            super(inf.inflate(R.layout.simple_list_item_1, parent, false));
-            mSheetTextView = itemView.findViewById(R.id.list_view);
+            super(inf.inflate(R.layout.sheet_list_item, parent, false));
+            mSheetTextView = itemView.findViewById(R.id.sheet_info);
         }
         void bind(Sheet sheet){
             String name = sheet.getName();
@@ -171,6 +174,7 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
 
     private class SheetAdapter extends RecyclerView.Adapter<SheetHolder>{
         private final List<Sheet> mSheetList;
+        private int selectedPos = RecyclerView.NO_POSITION;
 
         SheetAdapter(List<Sheet> sheetList) {mSheetList = sheetList;}
 
@@ -184,6 +188,7 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
         public void onBindViewHolder(@NonNull SheetHolder holder, int pos){
             Sheet sheet = mSheetList.get(pos);
             holder.bind(sheet);
+            holder.itemView.setSelected(selectedPos == pos);
         }
 
         @Override
