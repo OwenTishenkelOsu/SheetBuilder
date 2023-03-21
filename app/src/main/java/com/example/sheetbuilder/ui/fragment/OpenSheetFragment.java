@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -187,6 +188,7 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
             String name = sheet.getName();
             mSheetTextView.setText(name);
         }
+
     }
 
     private class SheetAdapter extends RecyclerView.Adapter<SheetHolder>{
@@ -206,6 +208,14 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
             Sheet sheet = mSheetList.get(pos);
             holder.bind(sheet);
             holder.itemView.setSelected(selectedPos == pos);
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Timber.tag(TAG).d(sheet.getName());
+                    Toast.makeText(getContext(), sheet.getName(), Toast.LENGTH_SHORT).show();
+                }
+            });
         }
 
         @Override
