@@ -11,6 +11,8 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.sheetbuilder.VolleyCallBack;
 import com.example.sheetbuilder.model.Sheet;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -30,6 +32,7 @@ public class SheetRepository {
     private final List<Sheet> mSheetList = new CopyOnWriteArrayList<>();
     private final String TAG = getClass().getSimpleName();
     public Map<String, Object> result = new HashMap<>();
+    public int id;
 
     public SheetRepository(Application app){
         mContext = app;
@@ -39,17 +42,60 @@ public class SheetRepository {
         return mSheetList;
     }
 
-    public void deleteSheet(){
+    public void deleteSheet(Sheet sheet, final VolleyCallBack callBack){
+        db.collection("sheet").document(sheet.getId())
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                        callBack.onSuccess();
+                    }
 
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error deleting document", e);
+                    }
+                });
     }
-    public void createSheet(){
-
+    public void createSheet(String name, final VolleyCallBack callBack){
+        Map<String, Object> sheet = new HashMap<>();
+        sheet.put("sheetName", name);
+        db.collection("sheet").document(Integer.toString(id)).set(sheet).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                        callBack.onSuccess();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
+        id++;
     }
-    public void renameSheet(){
-
+    public void renameSheet(Sheet sheet, String name, final VolleyCallBack callBack){
+        db.collection("sheet").document(sheet.getId()).update("sheetName", name).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully updated!");
+                        callBack.onSuccess();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error updating document", e);
+                    }
+                });
     }
 
     public void loadSheets(final VolleyCallBack callBack){
+        mSheetList.clear();
 
         ContentResolver resolver = mContext.getContentResolver();
 
@@ -60,12 +106,14 @@ public class SheetRepository {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Log.d(TAG, document.getId() + " => " + document.getData());
                         String s;
+                        String i = document.getId();
                         for(Map.Entry e:document.getData().entrySet()){
                             s = e.getValue().toString();
                             Log.d(TAG, s);
-                            mSheetList.add(new Sheet(s));
+                            mSheetList.add(new Sheet(s, i));
                             Log.d(TAG, "In sheet load" + mSheetList);
                         }
+                        id = mSheetList.size() +2;
                         callBack.onSuccess();
                     }
                 } else {

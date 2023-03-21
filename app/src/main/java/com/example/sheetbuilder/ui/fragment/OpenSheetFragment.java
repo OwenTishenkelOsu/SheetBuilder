@@ -42,6 +42,7 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
     private SheetAdapter mSheetAdapter;
     private RecyclerView mSheetRecyclerView;
     private EditText sheetname;
+    private Sheet mSheet;
 
 
     @Override
@@ -124,13 +125,11 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
         if(vId==R.id.select_sheet_button){
             //new account
         }else if(vId==R.id.delete_sheet_button){
-            //new account
-        }else if(vId == R.id.sheet_recycler_view) {
-
+            mSheetViewModel.mRepository.deleteSheet(mSheet, ()->mSheetViewModel.mRepository.loadSheets(()-> showSheets()));
         }else if(vId == R.id.create_sheet_button){
-
+            mSheetViewModel.mRepository.createSheet(sheetname.getText().toString(), ()->mSheetViewModel.mRepository.loadSheets(()-> showSheets()));
         }else if(vId==R.id.rename_sheet_button){
-
+            mSheetViewModel.mRepository.renameSheet(mSheet, sheetname.getText().toString(), ()->mSheetViewModel.mRepository.loadSheets(()-> showSheets()));
         }
     }
 
@@ -214,6 +213,7 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
                 public void onClick(View view) {
                     Timber.tag(TAG).d(sheet.getName());
                     Toast.makeText(getContext(), sheet.getName(), Toast.LENGTH_SHORT).show();
+                    mSheet = sheet;
                 }
             });
         }
