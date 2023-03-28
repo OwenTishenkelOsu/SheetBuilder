@@ -17,6 +17,7 @@ import androidx.lifecycle.AndroidViewModel;
 
 import com.example.sheetbuilder.R;
 import com.example.sheetbuilder.ui.activity.HomepageActivity;
+import com.example.sheetbuilder.ui.activity.OpenSheetActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -108,7 +109,7 @@ public class LogInFragment extends Fragment implements View.OnClickListener {
             googleSignIn();
         }
         else if(vId==R.id.exit_button){
-            startActivity(new Intent(activity, HomepageActivity.class));
+            startActivity(new Intent(activity, OpenSheetActivity.class));
             activity.finish();
         }
     }

@@ -34,6 +34,7 @@
         <activity android:name=".ui.activity.OpenSheetActivity" />
         <activity android:name=".ui.activity.OpenTemplateActivity" />
         <activity android:name=".ui.activity.CreateTemplateActivity" />
+        <activity android:name=".ui.activity.SheetActivity" />
     </application>
 
 </manifest>

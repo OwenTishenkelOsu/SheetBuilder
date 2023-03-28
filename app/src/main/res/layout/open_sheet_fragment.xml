@@ -11,7 +11,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
-        android:text="Existing Sheets"
+        android:text="My Sheets"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         />
     <LinearLayout
@@ -34,7 +34,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="8dp"
-            android:hint="Sheet Name for New Sheet/Renamed Sheet"
+            android:hint="Name for New Sheet/Renamed Sheet"
             android:maxLines="1"
             android:minHeight="48dp"
             android:textColorHint="#546E7A"/>
@@ -58,7 +58,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="16dp"
-                android:text="Select" />
+                android:text="Open" />
 
             <Button
                 android:id="@+id/delete_sheet_button"

@@ -1,6 +1,7 @@
 package com.example.sheetbuilder.ui.fragment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sheetbuilder.R;
+import com.example.sheetbuilder.ui.activity.CreateSheetActivity;
+import com.example.sheetbuilder.ui.activity.SheetActivity;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
@@ -123,7 +126,13 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
         Timber.tag(TAG).d("Received button click!");
 
         if(vId==R.id.select_sheet_button){
-            //new account
+            Intent intent = new Intent(activity, SheetActivity.class);
+            Bundle b = new Bundle(); //add sheetId and sheetName to bundle for SheetActivity
+            b.putInt("id", Integer.parseInt(mSheet.getId()));
+            b.putString("name", mSheet.getName());
+            intent.putExtras(b);
+            startActivity(intent);
+            activity.finish();
         }else if(vId==R.id.delete_sheet_button){
             mSheetViewModel.mRepository.deleteSheet(mSheet, ()->mSheetViewModel.mRepository.loadSheets(()-> showSheets()));
         }else if(vId == R.id.create_sheet_button){

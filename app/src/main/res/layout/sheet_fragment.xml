@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/container"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/title"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:text=""
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <!--<EditText
+            android:id="@+id/template_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="8dp"
+            android:hint="Template Name"
+            android:maxLines="1"
+            android:minHeight="48dp"
+            android:textColorHint="#546E7A"/>-->
+
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:ignore="Orientation">
+
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/list"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"/>
+
+        <Button
+            android:id="@+id/add_element_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
+            android:text="Add Element" />
+        <Button
+            android:id="@+id/save_sheet_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
+            android:text="Save Sheet" />
+    </LinearLayout>
+</LinearLayout>
