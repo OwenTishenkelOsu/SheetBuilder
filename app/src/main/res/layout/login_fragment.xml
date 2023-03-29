@@ -4,7 +4,6 @@
     android:layout_height="wrap_content"
     android:id="@+id/container"
     android:orientation="vertical">
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,115 +13,14 @@
         android:text="@string/login"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         />
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:text="@string/username"
-        android:textColor="#546E7A"
-        android:textSize="16sp" />
 
-    <EditText
-        android:id="@+id/username"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="8dp"
-        android:hint="@string/gmail"
-        android:inputType="textPassword"
-        android:maxLines="1"
-        android:minHeight="48dp"
-        android:textColorHint="#546E7A"
-        android:autofillHints="username"/>
+        android:id="@+id/inner_container"
+        android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:text="@string/password"
-        android:textColor="#546E7A"
-        android:textSize="16sp" />
 
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="8dp"
-        android:hint="@string/enter_password"
-        android:inputType="textPassword"
-        android:maxLines="1"
-        android:minHeight="48dp"
-        android:textColorHint="#546E7A"
-        android:autofillHints="password"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:labelFor="@+id/password_confirm"
-        android:text="@string/confirm_password"
-        android:textColor="#546E7A" />
-
-    <EditText
-        android:id="@+id/password_confirm"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="8dp"
-        android:hint="@string/confirm_password"
-        android:inputType="textPassword"
-        android:maxLines="1"
-        android:minHeight="48dp"
-        android:textColorHint="#546E7A"
-        android:autofillHints="password"/>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal" >
-
-                <Button
-                android:id="@+id/new_account_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="16dp"
-                android:text="@string/new_acc" />
-
-            <Button
-                android:id="@+id/clear_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="16dp"
-                android:text="@string/clear" />
-        </LinearLayout>
-
-        <Button
-        android:id="@+id/exit_button"
-            android:layout_gravity="bottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dip"
-        android:layout_marginRight="16dp"
-        android:text="@string/Return" />
 
         <ImageView
             android:id="@+id/gmail_button"
@@ -131,6 +29,23 @@
             android:layout_gravity="center"
             android:src="@drawable/google"/>
 
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="223dp"
+            android:layout_height="294dp"
+            android:layout_gravity="center"
+            android:src="@drawable/shield_logo" />
+
+        <Button
+            android:id="@+id/exit_button"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:backgroundTint="#80471c"
+            android:text="@string/Quit" />
 
     </LinearLayout>
 </LinearLayout>

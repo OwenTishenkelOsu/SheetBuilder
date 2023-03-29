@@ -1,6 +1,7 @@
 package com.example.sheetbuilder.ui.fragment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.sheetbuilder.R;
+import com.example.sheetbuilder.ui.activity.LogInActivity;
+import com.example.sheetbuilder.ui.activity.OpenSheetActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,21 +68,29 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
         if(saveSheetButton!= null){
             saveSheetButton.setOnClickListener(this);
         }
+        final Button backButton = v.findViewById(R.id.back_button);
+        if(backButton!= null){
+            backButton.setOnClickListener(this);
+        }
 
         return v;
     }
 
     @Override
-    public void onClick(View view){
+    public void onClick(View view) {
         final Activity activity = requireActivity();
         final int vId = view.getId();
 
         Timber.tag(TAG).d("Received button click!");
 
-        if(vId==R.id.add_element_button){
+        if (vId == R.id.add_element_button) {
             addEditText();
-        }else if(vId==R.id.save_sheet_button){
+        } else if (vId == R.id.save_sheet_button) {
             saveElements();
+        } else if (vId == R.id.back_button) {
+            Intent intent = new Intent(activity, OpenSheetActivity.class);
+            startActivity(intent);
+            activity.finish();
         }
     }
 

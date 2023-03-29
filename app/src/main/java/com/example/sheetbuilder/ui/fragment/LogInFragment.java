@@ -3,12 +3,15 @@ package com.example.sheetbuilder.ui.fragment;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,7 +20,9 @@ import androidx.lifecycle.AndroidViewModel;
 
 import com.example.sheetbuilder.R;
 import com.example.sheetbuilder.ui.activity.HomepageActivity;
+import com.example.sheetbuilder.ui.activity.LogInActivity;
 import com.example.sheetbuilder.ui.activity.OpenSheetActivity;
+import com.example.sheetbuilder.ui.activity.SheetActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -28,8 +33,7 @@ import com.google.android.gms.tasks.Task;
 import timber.log.Timber;
 
 public class LogInFragment extends Fragment implements View.OnClickListener {
-    private EditText mUsername;
-    private EditText mPassword;
+
     private AndroidViewModel mVm;
 
     private GoogleSignInOptions gSignInOptions;
@@ -45,18 +49,16 @@ public class LogInFragment extends Fragment implements View.OnClickListener {
 
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
-        gSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        GoogleSignInOptions gSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail().build();
-
         // Build a GoogleSignInClient with the options specified by gso.
-        if(getContext() != null)
+        gSignInClient = GoogleSignIn.getClient(getContext(), gSignInOptions);
+        Timber.tag(TAG).d("Successfully Created Google SignInClient");
+
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getContext());
+        if(account != null)
         {
-            Timber.tag(TAG).d("Successfully Created Google SignInClient");
-            gSignInClient = GoogleSignIn.getClient(getContext(), gSignInOptions);
-        }
-        else
-        {
-            Timber.tag(TAG).d("getContext is NULL, we cannot create Google SignInClient");
+            finishSignIn(getActivity());
         }
 
     }
@@ -70,24 +72,9 @@ public class LogInFragment extends Fragment implements View.OnClickListener {
 
         v = inf.inflate(R.layout.login_fragment, c, false);
 
-        mUsername=v.findViewById(R.id.username);
-        mPassword=v.findViewById(R.id.password);
-
         mGoogleBtn=v.findViewById(R.id.gmail_button);
         mGoogleBtn.setOnClickListener(this);
 
-        final Button newActButton = v.findViewById(R.id.new_account_button);
-        if(newActButton!=null){
-            newActButton.setOnClickListener(this);
-        }
-        final Button clearButton = v.findViewById(R.id.clear_button);
-        if(clearButton!=null){
-            clearButton.setOnClickListener(this);
-        }
-        final Button exitButton = v.findViewById(R.id.exit_button);
-        if(exitButton!= null){
-            exitButton.setOnClickListener(this);
-        }
         return v;
     }
 
@@ -98,28 +85,22 @@ public class LogInFragment extends Fragment implements View.OnClickListener {
 
         Timber.tag(TAG).d("Received button click!");
 
-        if(vId==R.id.new_account_button){
-            //new account
-        }else if(vId == R.id.clear_button){
-            //clear
-        }
-        else if(vId == R.id.gmail_button)
+        if(vId == R.id.gmail_button)
         {
             Timber.tag(TAG).d("You clicked you google button");
             googleSignIn();
         }
         else if(vId==R.id.exit_button){
-            startActivity(new Intent(activity, OpenSheetActivity.class));
-            activity.finish();
+            Toast.makeText(activity, "Need to Add Exit Functionality ", Toast.LENGTH_SHORT).show();
         }
     }
+
 
     private void googleSignIn()
     {
         Intent signInIntent = gSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, 1000);
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -129,21 +110,21 @@ public class LogInFragment extends Fragment implements View.OnClickListener {
         {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
 
-           handleSignInResult(task);
+            try {
+                task.getResult(ApiException.class);
+                Timber.tag(TAG).d("google CompleteTask is Successful");
+                finishSignIn(getActivity());
+            } catch (ApiException e) {
+                Timber.tag(TAG).d("Sign in Result to Google: failed code" + e.getStatusCode());
+            }
         }
     }
 
-    private void handleSignInResult(Task<GoogleSignInAccount> completedTask)
+    private void finishSignIn(Activity activity)
     {
-        try {
-            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-
-            Timber.tag(TAG).d("Your google account id is: " +account.getId());
-        } catch (ApiException e) {
-            Timber.tag(TAG).d("Sign in Result to Google: failed code" + e.getStatusCode());
-        }
-
-
+        Intent intent = new Intent(activity, OpenSheetActivity.class);
+        startActivity(intent);
+        activity.finish();
     }
 
 
@@ -151,8 +132,6 @@ public class LogInFragment extends Fragment implements View.OnClickListener {
     public void onDestroyView() {
         super.onDestroyView();
         Timber.tag(TAG).d("onDestroyView()");
-        mUsername = null;
-        mPassword = null;
     }
 
     @Override
