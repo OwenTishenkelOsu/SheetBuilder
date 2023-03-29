@@ -9,7 +9,7 @@
     <string name="gmail">username@gmail.com</string>
     <string name="clear">Clear Fields</string>
     <string name="login">Login</string>
-    <string name="Return">Return To SheetBuilder</string>
+    <string name="Quit">Quit SheetBuilder</string>
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <!-- TODO: Remove or change this placeholder text -->

@@ -11,7 +11,8 @@
         android:layout_gravity="center"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
-        android:text="Existing Sheets"
+        android:id="@+id/page_title"
+        android:text="My Sheets"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         />
     <LinearLayout
@@ -19,13 +20,31 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            android:id="@+id/sheet_recycler_view"
+            xmlns:android="http://schemas.android.com/apk/res/android" />
 
 
-        <ListView
+        <EditText
+            android:id="@+id/sheet_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="8dp"
+            android:hint="Name for New Sheet/Renamed Sheet"
+            android:maxLines="1"
+            android:minHeight="48dp"
+            android:textColorHint="#546E7A"/>
+
+        <!--<ListView
             android:id="@+id/list_view"
             android:layout_width="match_parent"
             android:layout_height="265dp"
-            />
+            />-->
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -40,7 +59,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="16dp"
-                android:text="Select" />
+                android:text="Open" />
 
             <Button
                 android:id="@+id/delete_sheet_button"
@@ -51,5 +70,38 @@
                 android:layout_marginRight="16dp"
                 android:text="Delete" />
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/create_sheet_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="16dp"
+                android:text="Create" />
+
+            <Button
+                android:id="@+id/rename_sheet_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="16dp"
+                android:text="Rename" />
+        </LinearLayout>
+
+            <Button
+            android:id="@+id/sign_out_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
+            android:text="SignOut" />
     </LinearLayout>
 </LinearLayout>
