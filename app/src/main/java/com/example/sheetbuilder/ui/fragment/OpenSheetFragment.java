@@ -23,7 +23,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sheetbuilder.R;
 import com.example.sheetbuilder.ui.activity.CreateSheetActivity;
+import com.example.sheetbuilder.ui.activity.LogInActivity;
+import com.example.sheetbuilder.ui.activity.OpenSheetActivity;
 import com.example.sheetbuilder.ui.activity.SheetActivity;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
@@ -47,13 +55,40 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
     private EditText sheetname;
     private Sheet mSheet;
 
+    private String sheetUserName;
+    private TextView pageName;
+
+    //Google sign in to use across fragment classes LoginFragment and OpenSheetFragment
+    private GoogleSignInOptions gSignInOptions;
+    private GoogleSignInClient gSignInClient;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         Activity activity = requireActivity();
         mSheetViewModel = new SheetViewModel(activity.getApplication());
         mSheetViewModel.mRepository.loadSheets(()-> showSheets());
+
+        gSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail().build();
+        // Build a GoogleSignInClient with the options specified by gso.
+        Timber.tag(TAG).d("Successfully Created Google SignInClient");
+        gSignInClient = GoogleSignIn.getClient(getContext(), gSignInOptions);
+
+        /* user email along with other data from google parcelable object account (below)*/
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getContext());
+        if(account != null)
+        {
+            //used in onCreateView within pageName
+            sheetUserName = account.getDisplayName();
+            //ie String email = account.getEmail();
+        }
+        else
+        {
+            Toast.makeText(activity, "account is null", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public View onCreateView(@NonNull LayoutInflater inf, ViewGroup c, Bundle savedInstanceState){
@@ -69,9 +104,8 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
 
         v = inf.inflate(R.layout.open_sheet_fragment, c, false);
 
-        String[] temps = {"item1", "item2", "item3", "item4"};
-
-
+        pageName = v.findViewById(R.id.page_title);
+        pageName.setText(sheetUserName);
 
         /*ArrayAdapter<String> t;
         t = new ArrayAdapter<String>(v.getContext(), R.layout.simple_list_item_1, temps);
@@ -95,6 +129,11 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
         if(renameSheetButton!= null){
             renameSheetButton.setOnClickListener(this);
         }
+        final Button signOutButton = v.findViewById(R.id.sign_out_button);
+        if(signOutButton!= null){
+            signOutButton.setOnClickListener(this);
+        }
+
 
         /*list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
@@ -140,6 +179,26 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
         }else if(vId==R.id.rename_sheet_button){
             mSheetViewModel.mRepository.renameSheet(mSheet, sheetname.getText().toString(), ()->mSheetViewModel.mRepository.loadSheets(()-> showSheets()));
         }
+        else if(vId==R.id.sign_out_button){
+           signOut((activity));
+        }
+    }
+
+    /*
+        Signout Function (signs out using google signInClient object method)
+        then perform an intent to go back to the Login activity
+     */
+    void signOut(Activity activity)
+    {
+        gSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Intent intent = new Intent(activity, LogInActivity.class);
+                startActivity(intent);
+                activity.finish();
+            }
+        });
+
     }
 
     @Override
