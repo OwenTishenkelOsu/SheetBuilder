@@ -125,7 +125,7 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
 
         Timber.tag(TAG).d("Received button click!");
 
-        if(vId==R.id.select_sheet_button){
+        if(vId==R.id.select_sheet_button && mSheet != null){
             Intent intent = new Intent(activity, SheetActivity.class);
             Bundle b = new Bundle(); //add sheetId and sheetName to bundle for SheetActivity
             b.putInt("id", Integer.parseInt(mSheet.getId()));

@@ -58,6 +58,14 @@
             android:layout_marginRight="16dp"
             android:text="Add Element" />
         <Button
+            android:id="@+id/delete_element_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
+            android:text="Delete Selected" />
+        <Button
             android:id="@+id/save_sheet_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
