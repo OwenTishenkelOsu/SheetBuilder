@@ -151,7 +151,7 @@ public class LogInFragment extends Fragment implements View.OnClickListener {
                 id = u.getId();
             }
         }
-        b.putString("id", id);
+        b.putString("userid", id);
         intent.putExtras(b);
         startActivity(intent);
         activity.finish();

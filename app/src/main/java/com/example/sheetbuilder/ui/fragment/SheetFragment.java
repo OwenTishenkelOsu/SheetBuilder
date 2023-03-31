@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 
 import com.example.sheetbuilder.R;
 import com.example.sheetbuilder.model.Element;
+import com.example.sheetbuilder.ui.activity.SheetActivity;
 import com.example.sheetbuilder.viewmodel.ElementViewModel;
 import com.example.sheetbuilder.viewmodel.SheetViewModel;
 import com.example.sheetbuilder.ui.activity.LogInActivity;
@@ -43,12 +44,14 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
     private ElementViewModel mElementViewModel;
     private int sheetID;
     private Element mElement;
+    private String userID;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         pageTitle = this.getArguments().getString("name");
         sheetID = this.getArguments().getInt("id");
+        userID = this.getArguments().getString("userid");
 
         Activity activity = requireActivity();
         mElementViewModel = new ElementViewModel(activity.getApplication());
@@ -113,6 +116,9 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
             saveElements();
         } else if (vId == R.id.back_button) {
             Intent intent = new Intent(activity, OpenSheetActivity.class);
+            Bundle b = new Bundle(); //add sheetId and sheetName to bundle for SheetActivity
+            b.putString("userid", userID);
+            intent.putExtras(b);
             startActivity(intent);
             activity.finish();
         }

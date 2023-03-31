@@ -91,7 +91,7 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
             Toast.makeText(activity, "account is null", Toast.LENGTH_SHORT).show();
         }
 
-        userID = this.getArguments().getString("id");
+        userID = this.getArguments().getString("userid");
         mSheetViewModel = new SheetViewModel(activity.getApplication());
         mSheetViewModel.mRepository.loadSheets(userID, ()-> showSheets());
     }
@@ -174,6 +174,7 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
             Bundle b = new Bundle(); //add sheetId and sheetName to bundle for SheetActivity
             b.putInt("id", Integer.parseInt(mSheet.getId()));
             b.putString("name", mSheet.getName());
+            b.putString("userid", userID);
             intent.putExtras(b);
             startActivity(intent);
             activity.finish();
