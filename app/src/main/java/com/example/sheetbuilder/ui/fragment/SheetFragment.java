@@ -3,6 +3,7 @@ package com.example.sheetbuilder.ui.fragment;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,9 @@ import com.example.sheetbuilder.viewmodel.SheetViewModel;
 import com.example.sheetbuilder.ui.activity.LogInActivity;
 import com.example.sheetbuilder.ui.activity.OpenSheetActivity;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import timber.log.Timber;
 
@@ -72,12 +75,6 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
         sv = v.findViewById(R.id.scroll_view);
         l = v.findViewById(R.id.list);
         editTexts = new ArrayList<EditText>();
-
-        templatename = v.findViewById(R.id.template_name);
-
-
-
-
 
         final Button addElementButton = v.findViewById(R.id.add_element_button);
         if(addElementButton!= null){
@@ -131,7 +128,12 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
         et.setLayoutParams(params);
         //editTexts.add(et);
         //l.addView(et);
-        mElementViewModel.mRepository.addElement(et.getText().toString(), Integer.toString(sheetID), ()->showElements());
+        int i = 0;
+        for(Element e : mElementViewModel.getAllElements()){
+            e.setText(editTexts.get(i).getText().toString());
+            i++;
+        }
+        mElementViewModel.mRepository.addElement(et.getText().toString(), Integer.toString(sheetID), () -> showElements());
     }
 
     void saveElements(){
@@ -140,7 +142,8 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
             e.setText(editTexts.get(i).getText().toString());
             i++;
         }
-        mElementViewModel.mRepository.saveElements(Integer.toString(sheetID), ()->showElements());
+        //TODO Check for duplicates before saving
+            mElementViewModel.mRepository.saveElements(Integer.toString(sheetID), ()->showElements());
     }
 
     void showElements(){
@@ -168,6 +171,20 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
                 });
             }
         }
+    }
+
+    //we need to add this to check for duplicates to prevent users from added the same elements
+    boolean checkForDuplicates(List<Element> sheets, String element) {
+
+        boolean containsDuplicates = false;
+        for (Element sheet : sheets) {
+            if (sheet.getText().toString().matches(element)) {
+                containsDuplicates = true;
+                Log.d(TAG, "Cannot add duplicate sheet elements");
+            }
+        }
+
+        return containsDuplicates;
     }
 
     @Override

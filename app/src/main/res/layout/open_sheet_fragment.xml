@@ -63,7 +63,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="16dp"
-                android:backgroundTint="#8B4513"
+                android:backgroundTint="@color/cream"
                 android:text="Open" />
 
             <Button
@@ -73,7 +73,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="16dp"
-                android:backgroundTint="#8B4513"
+                android:backgroundTint="@color/cream"
                 android:text="Delete" />
         </LinearLayout>
         <LinearLayout
@@ -89,7 +89,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="16dp"
-                android:backgroundTint="#8B4513"
+                android:backgroundTint="@color/cream"
                 android:text="Create" />
 
             <Button
@@ -99,7 +99,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="16dp"
-                android:backgroundTint="#8B4513"
+                android:backgroundTint="@color/cream"
                 android:text="Rename" />
         </LinearLayout>
 
@@ -110,7 +110,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginRight="16dp"
-                android:backgroundTint="#8B4513"
+                android:backgroundTint="@color/wood_brown"
             android:text="SignOut" />
     </LinearLayout>
 </LinearLayout>

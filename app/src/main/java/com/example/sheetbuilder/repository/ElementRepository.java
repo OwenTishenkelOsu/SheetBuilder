@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.util.Log;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
@@ -22,8 +23,10 @@ import com.squareup.okhttp.Response;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ElementRepository {
@@ -42,17 +45,18 @@ public class ElementRepository {
     }
 
     public void addElement(String text, String sheetID, VolleyCallBack callBack){
+
         mElementList.add(new Element(text, Integer.toString(id), sheetID));
         Map<String, Object> element = new HashMap<>();
         element.put("sheetID", sheetID);
         element.put("text", text);
         db.collection("element").document(Integer.toString(id)).set(element).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully written!");
-                        callBack.onSuccess();
-                    }
-                })
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d(TAG, "DocumentSnapshot successfully written!");
+                callBack.onSuccess();
+            }
+        })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {

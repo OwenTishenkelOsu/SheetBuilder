@@ -60,7 +60,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginRight="16dp"
-            android:backgroundTint="#8B4513"
+            android:backgroundTint="@color/cream"
             android:text="Add Element" />
         <Button
             android:id="@+id/delete_element_button"
@@ -69,6 +69,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginRight="16dp"
+            android:backgroundTint="@color/cream"
             android:text="Delete Selected" />
         <Button
             android:id="@+id/save_sheet_button"
@@ -77,7 +78,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginRight="16dp"
-            android:backgroundTint="#8B4513"
+            android:backgroundTint="@color/cream"
             android:text="Save Sheet" />
 
         <Button
@@ -87,7 +88,7 @@
             android:layout_marginLeft="100dp"
             android:layout_marginRight="100dp"
             android:layout_marginTop="8dp"
-            android:backgroundTint="#8B4513"
+            android:backgroundTint="@color/wood_brown"
             android:text="Back" />
     </LinearLayout>
 </LinearLayout>

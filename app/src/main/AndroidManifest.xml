@@ -30,11 +30,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity android:name=".ui.activity.HomepageActivity" />
-        <activity android:name=".ui.activity.CreateSheetActivity" />
         <activity android:name=".ui.activity.OpenSheetActivity" />
-        <activity android:name=".ui.activity.OpenTemplateActivity" />
-        <activity android:name=".ui.activity.CreateTemplateActivity" />
         <activity android:name=".ui.activity.SheetActivity" />
     </application>
 
