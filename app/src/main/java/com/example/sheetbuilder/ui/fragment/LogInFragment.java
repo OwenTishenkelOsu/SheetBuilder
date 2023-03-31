@@ -91,7 +91,7 @@ public class LogInFragment extends Fragment implements View.OnClickListener {
             googleSignIn();
         }
         else if(vId==R.id.exit_button){
-            Toast.makeText(activity, "Need to Add Exit Functionality ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity, "Need to Add Exit  ", Toast.LENGTH_SHORT).show();
         }
     }
 
