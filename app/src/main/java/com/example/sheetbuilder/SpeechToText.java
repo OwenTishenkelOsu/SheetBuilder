@@ -1,4 +1,4 @@
-package com.example.sheetbuilder.ui.activity;
+package com.example.sheetbuilder;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,20 +9,21 @@ import android.speech.SpeechRecognizer;
 import android.view.View;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class SpeechToTextActivity extends AppCompatActivity implements View.OnClickListener {
+public class SpeechToText {
     private static final int REQUEST_CODE_SPEECH_INPUT = 1;
-    private String output;
+    private String output = "";
     private SpeechRecognizer speechRecognizer;
     private Intent intent;
     private boolean listening = false;
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
+    private Activity activity;
+    public  SpeechToText(Activity activity) {
+        this.activity = activity;
+        speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this.activity);
         intent
                 = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
@@ -80,23 +81,25 @@ public class SpeechToTextActivity extends AppCompatActivity implements View.OnCl
 
     }
 
-    @Override
-    public void onClick(View view) {
+    public boolean listen() {
         if(!listening){
             listening = true;
             speechRecognizer.startListening(intent);
         } else{
             listening = false;
             speechRecognizer.stopListening();
+
             //output should go to wherever it's meant to go at this point
         }
-
+        return listening;
 
     }
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void destroy() {
         speechRecognizer.destroy();
         //Should be destroyed whenever not in active use, as it supposedly consumes a lot of battery life
+    }
+    public String retrieveText(){
+        //Returns empty string if nothing was recorded
+        return output;
     }
 }

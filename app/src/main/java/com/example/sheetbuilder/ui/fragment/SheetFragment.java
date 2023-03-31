@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -17,7 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.sheetbuilder.R;
-import com.example.sheetbuilder.ui.activity.LogInActivity;
+import com.example.sheetbuilder.SpeechToText;
 import com.example.sheetbuilder.ui.activity.OpenSheetActivity;
 
 import java.util.ArrayList;
@@ -35,12 +36,15 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
     private LinearLayout l;
     private String pageTitle;
     private int sheetID;
+    private int evalue;
+    private SpeechToText speechToText;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         pageTitle = this.getArguments().getString("name");
         sheetID = this.getArguments().getInt("id");
+
     }
 
     @Override
@@ -72,7 +76,10 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
         if(backButton!= null){
             backButton.setOnClickListener(this);
         }
-
+        final Button voiceButton = v.findViewById(R.id.voice_button);
+        if(voiceButton!= null){
+            voiceButton.setOnClickListener(this);
+        }
         return v;
     }
 
@@ -91,6 +98,12 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
             Intent intent = new Intent(activity, OpenSheetActivity.class);
             startActivity(intent);
             activity.finish();
+        } else if(vId == R.id.voice_button){
+            speechToText = new SpeechToText(requireActivity());
+            if(speechToText.listen()){
+                editTexts.get(evalue).setText(speechToText.retrieveText());
+            }
+
         }
     }
 
@@ -100,6 +113,15 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
         ViewGroup.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         et.setLayoutParams(params);
         editTexts.add(et);
+        //touch listener to track current edit text
+        et.setOnTouchListener(new View.OnTouchListener()
+        {
+            public boolean onTouch(View arg0, MotionEvent arg1)
+            {
+                evalue=editTexts.indexOf(et);
+                return false;
+            }
+        });
         l.addView(et);
     }
 
