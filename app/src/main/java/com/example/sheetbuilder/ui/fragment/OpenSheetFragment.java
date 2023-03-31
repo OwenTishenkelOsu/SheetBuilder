@@ -61,6 +61,7 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
     //Google sign in to use across fragment classes LoginFragment and OpenSheetFragment
     private GoogleSignInOptions gSignInOptions;
     private GoogleSignInClient gSignInClient;
+    private String userID;
 
 
     @Override
@@ -68,8 +69,7 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
         super.onCreate(savedInstanceState);
 
         Activity activity = requireActivity();
-        mSheetViewModel = new SheetViewModel(activity.getApplication());
-        mSheetViewModel.mRepository.loadSheets(()-> showSheets());
+
 
         gSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail().build();
@@ -83,12 +83,17 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
         {
             //used in onCreateView within pageName
             sheetUserName = account.getDisplayName();
+
             //ie String email = account.getEmail();
         }
         else
         {
             Toast.makeText(activity, "account is null", Toast.LENGTH_SHORT).show();
         }
+
+        userID = this.getArguments().getString("userid");
+        mSheetViewModel = new SheetViewModel(activity.getApplication());
+        mSheetViewModel.mRepository.loadSheets(userID, ()-> showSheets());
     }
 
     public View onCreateView(@NonNull LayoutInflater inf, ViewGroup c, Bundle savedInstanceState){
@@ -164,20 +169,21 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
 
         Timber.tag(TAG).d("Received button click!");
 
-        if(vId==R.id.select_sheet_button){
+        if(vId==R.id.select_sheet_button && mSheet != null){
             Intent intent = new Intent(activity, SheetActivity.class);
             Bundle b = new Bundle(); //add sheetId and sheetName to bundle for SheetActivity
             b.putInt("id", Integer.parseInt(mSheet.getId()));
             b.putString("name", mSheet.getName());
+            b.putString("userid", userID);
             intent.putExtras(b);
             startActivity(intent);
             activity.finish();
         }else if(vId==R.id.delete_sheet_button){
-            mSheetViewModel.mRepository.deleteSheet(mSheet, ()->mSheetViewModel.mRepository.loadSheets(()-> showSheets()));
+            mSheetViewModel.mRepository.deleteSheet(mSheet, ()->mSheetViewModel.mRepository.loadSheets(userID, ()-> showSheets()));
         }else if(vId == R.id.create_sheet_button){
-            mSheetViewModel.mRepository.createSheet(sheetname.getText().toString(), ()->mSheetViewModel.mRepository.loadSheets(()-> showSheets()));
+            mSheetViewModel.mRepository.createSheet(sheetname.getText().toString(), ()->mSheetViewModel.mRepository.loadSheets(userID, ()-> showSheets()));
         }else if(vId==R.id.rename_sheet_button){
-            mSheetViewModel.mRepository.renameSheet(mSheet, sheetname.getText().toString(), ()->mSheetViewModel.mRepository.loadSheets(()-> showSheets()));
+            mSheetViewModel.mRepository.renameSheet(mSheet, sheetname.getText().toString(), ()->mSheetViewModel.mRepository.loadSheets(userID, ()-> showSheets()));
         }
         else if(vId==R.id.sign_out_button){
            signOut((activity));
