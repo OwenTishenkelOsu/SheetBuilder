@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.sheetbuilder.VolleyCallBack;
+import com.example.sheetbuilder.model.Element;
 import com.example.sheetbuilder.model.Sheet;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -33,6 +34,7 @@ public class SheetRepository {
     private final String TAG = getClass().getSimpleName();
     public Map<String, Object> result = new HashMap<>();
     public int id;
+    public String userID;
 
     public SheetRepository(Application app){
         mContext = app;
@@ -63,6 +65,7 @@ public class SheetRepository {
     public void createSheet(String name, final VolleyCallBack callBack){
         Map<String, Object> sheet = new HashMap<>();
         sheet.put("sheetName", name);
+        sheet.put("userID", userID);
         db.collection("sheet").document(Integer.toString(id)).set(sheet).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -94,8 +97,9 @@ public class SheetRepository {
                 });
     }
 
-    public void loadSheets(final VolleyCallBack callBack){
+    public void loadSheets(String uid, final VolleyCallBack callBack){
         mSheetList.clear();
+        this.userID = uid;
 
         ContentResolver resolver = mContext.getContentResolver();
 
@@ -105,17 +109,29 @@ public class SheetRepository {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Log.d(TAG, document.getId() + " => " + document.getData());
-                        String s;
+                        String s = "";
+                        String uId = "";
                         String i = document.getId();
+
+
                         for(Map.Entry e:document.getData().entrySet()){
-                            s = e.getValue().toString();
-                            Log.d(TAG, s);
-                            mSheetList.add(new Sheet(s, i));
-                            Log.d(TAG, "In sheet load" + mSheetList);
+                            if(e.getKey().toString().equals("sheetName")){
+                                s = e.getValue().toString();
+                            }else if(e.getKey().toString().equals("userID")){
+                                uId = e.getValue().toString();
+                            }
+
+                            //Log.d(TAG, "In sheet load" + mSheetList);
                         }
-                        id = mSheetList.size() +2;
-                        callBack.onSuccess();
+                        Log.d(TAG, uId + " " + userID);
+                        if(uId.equals(userID)) {
+                            mSheetList.add(new Sheet(s, i, uId));
+                        }
+
+
                     }
+                    id = mSheetList.size() +2;
+                    callBack.onSuccess();
                 } else {
                     Log.w(TAG, "Error getting documents.", task.getException());
                 }
