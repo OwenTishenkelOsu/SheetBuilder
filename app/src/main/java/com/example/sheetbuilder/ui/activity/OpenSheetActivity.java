@@ -18,6 +18,8 @@ public class OpenSheetActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Bundle b = getIntent().getExtras();
+
         Timber.plant(new Timber.DebugTree());
         Timber.tag(TAG).d("onCreate()");
 
@@ -28,6 +30,7 @@ public class OpenSheetActivity extends AppCompatActivity {
 
         if (frag == null) {
             frag = new OpenSheetFragment();
+            frag.setArguments(b);
             fm.beginTransaction().add(R.id.container, frag).commit();
         }
     }

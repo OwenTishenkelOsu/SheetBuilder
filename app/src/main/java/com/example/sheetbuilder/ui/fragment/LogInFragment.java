@@ -19,16 +19,21 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.AndroidViewModel;
 
 import com.example.sheetbuilder.R;
+import com.example.sheetbuilder.model.User;
+import com.example.sheetbuilder.repository.UserRepository;
 import com.example.sheetbuilder.ui.activity.HomepageActivity;
 import com.example.sheetbuilder.ui.activity.LogInActivity;
 import com.example.sheetbuilder.ui.activity.OpenSheetActivity;
 import com.example.sheetbuilder.ui.activity.SheetActivity;
+import com.example.sheetbuilder.viewmodel.UserViewModel;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+
+import java.util.List;
 
 import timber.log.Timber;
 
@@ -38,14 +43,20 @@ public class LogInFragment extends Fragment implements View.OnClickListener {
 
     private GoogleSignInOptions gSignInOptions;
     private GoogleSignInClient gSignInClient;
+    private GoogleSignInAccount account;
 
     private ImageView mGoogleBtn;
+    private UserRepository mRepository;
+    private UserViewModel mUserViewModel;
 
     private final String TAG = getClass().getSimpleName();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Activity activity = requireActivity();
+
+        mUserViewModel = new UserViewModel(activity.getApplication());
 
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -55,10 +66,10 @@ public class LogInFragment extends Fragment implements View.OnClickListener {
         gSignInClient = GoogleSignIn.getClient(getContext(), gSignInOptions);
         Timber.tag(TAG).d("Successfully Created Google SignInClient");
 
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getContext());
+        account = GoogleSignIn.getLastSignedInAccount(getContext());
         if(account != null)
         {
-            finishSignIn(getActivity());
+            mUserViewModel.mRepository.loadUsers(()->mUserViewModel.mRepository.createUser(account.getEmail(), ()->finishSignIn(getActivity())));
         }
 
     }
@@ -113,16 +124,35 @@ public class LogInFragment extends Fragment implements View.OnClickListener {
             try {
                 task.getResult(ApiException.class);
                 Timber.tag(TAG).d("google CompleteTask is Successful");
-                finishSignIn(getActivity());
+                account = task.getResult();
+                createUser();
             } catch (ApiException e) {
                 Timber.tag(TAG).d("Sign in Result to Google: failed code" + e.getStatusCode());
             }
         }
     }
 
+    private void createUser(){
+        Timber.tag(TAG).d("CREATING USER");
+        mUserViewModel.mRepository.loadUsers(()->mUserViewModel.mRepository.createUser(account.getEmail(), ()->finishSignIn(getActivity())));
+    }
+
     private void finishSignIn(Activity activity)
     {
+        Timber.tag(TAG).d("finishSignIn");
         Intent intent = new Intent(activity, OpenSheetActivity.class);
+        Bundle b = new Bundle();
+        List<User> mUserList = mUserViewModel.mRepository.getAllUsers();
+        String id = "";
+        Timber.tag(TAG).d(account.getEmail());
+        for(User u : mUserList){
+            Timber.tag(TAG).d(u.getEmail());
+            if(u.getEmail().equals(account.getEmail())){
+                id = u.getId();
+            }
+        }
+        b.putString("userid", id);
+        intent.putExtras(b);
         startActivity(intent);
         activity.finish();
     }
