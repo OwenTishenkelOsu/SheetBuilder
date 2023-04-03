@@ -34,5 +34,9 @@
         <activity android:name=".ui.activity.OpenSheetActivity" />
         <activity android:name=".ui.activity.SheetActivity" />
     </application>
+    <queries>
+        <package android:name="com.google.android.googlequicksearchbox"/>
+    </queries>
+
 
 </manifest>
