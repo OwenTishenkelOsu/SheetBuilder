@@ -6,11 +6,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,9 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sheetbuilder.R;
-import com.example.sheetbuilder.ui.activity.CreateSheetActivity;
 import com.example.sheetbuilder.ui.activity.LogInActivity;
-import com.example.sheetbuilder.ui.activity.OpenSheetActivity;
 import com.example.sheetbuilder.ui.activity.SheetActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -181,7 +176,13 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
         }else if(vId==R.id.delete_sheet_button){
             mSheetViewModel.mRepository.deleteSheet(mSheet, ()->mSheetViewModel.mRepository.loadSheets(userID, ()-> showSheets()));
         }else if(vId == R.id.create_sheet_button){
-            mSheetViewModel.mRepository.createSheet(sheetname.getText().toString(), ()->mSheetViewModel.mRepository.loadSheets(userID, ()-> showSheets()));
+            //This checks to see if the sheet name is empty or just a bunch of whitespace
+            if(sheetname.getText().toString().matches("") || sheetname.getText().toString().trim().length()==0) {
+                Toast.makeText(activity, "You cannot enter an empty sheet name", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                mSheetViewModel.mRepository.createSheet(sheetname.getText().toString(), ()->mSheetViewModel.mRepository.loadSheets(userID, ()-> showSheets()));
+            }
         }else if(vId==R.id.rename_sheet_button){
             mSheetViewModel.mRepository.renameSheet(mSheet, sheetname.getText().toString(), ()->mSheetViewModel.mRepository.loadSheets(userID, ()-> showSheets()));
         }

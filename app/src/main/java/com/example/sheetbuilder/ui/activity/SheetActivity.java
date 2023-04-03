@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.sheetbuilder.R;
-import com.example.sheetbuilder.ui.fragment.HomepageFragment;
 import com.example.sheetbuilder.ui.fragment.SheetFragment;
 
 import timber.log.Timber;

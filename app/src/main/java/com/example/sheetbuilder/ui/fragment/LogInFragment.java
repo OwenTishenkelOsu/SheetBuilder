@@ -3,13 +3,9 @@ package com.example.sheetbuilder.ui.fragment;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -21,10 +17,7 @@ import androidx.lifecycle.AndroidViewModel;
 import com.example.sheetbuilder.R;
 import com.example.sheetbuilder.model.User;
 import com.example.sheetbuilder.repository.UserRepository;
-import com.example.sheetbuilder.ui.activity.HomepageActivity;
-import com.example.sheetbuilder.ui.activity.LogInActivity;
 import com.example.sheetbuilder.ui.activity.OpenSheetActivity;
-import com.example.sheetbuilder.ui.activity.SheetActivity;
 import com.example.sheetbuilder.viewmodel.UserViewModel;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -102,7 +95,7 @@ public class LogInFragment extends Fragment implements View.OnClickListener {
             googleSignIn();
         }
         else if(vId==R.id.exit_button){
-            Toast.makeText(activity, "Need to Add Exit Functionality ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity, "Need to Add Exit  ", Toast.LENGTH_SHORT).show();
         }
     }
 
