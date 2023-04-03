@@ -133,11 +133,7 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
             e.setText(editTexts.get(i).getText().toString());
             i++;
         }
-        if(!checkForDuplicates(mElementViewModel.getAllElements(), et.getText().toString()))
-        {
-            mElementViewModel.mRepository.addElement(et.getText().toString(), Integer.toString(sheetID), () -> showElements());
-        }
-
+        mElementViewModel.mRepository.addElement(et.getText().toString(), Integer.toString(sheetID), () -> showElements());
     }
 
     void saveElements(){
@@ -147,7 +143,7 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
             i++;
         }
         //TODO Check for duplicates before saving
-            mElementViewModel.mRepository.saveElements(Integer.toString(sheetID), ()->showElements());
+        mElementViewModel.mRepository.saveElements(Integer.toString(sheetID), ()->showElements());
     }
 
     void showElements(){
