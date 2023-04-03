@@ -133,7 +133,11 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
             e.setText(editTexts.get(i).getText().toString());
             i++;
         }
-        mElementViewModel.mRepository.addElement(et.getText().toString(), Integer.toString(sheetID), () -> showElements());
+        if(!checkForDuplicates(mElementViewModel.getAllElements(), et.getText().toString()))
+        {
+            mElementViewModel.mRepository.addElement(et.getText().toString(), Integer.toString(sheetID), () -> showElements());
+        }
+
     }
 
     void saveElements(){
@@ -174,13 +178,16 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
     }
 
     //we need to add this to check for duplicates to prevent users from added the same elements
-    boolean checkForDuplicates(List<Element> sheets, String element) {
+    boolean checkForDuplicates(List<Element> Elements, String element) {
 
         boolean containsDuplicates = false;
-        for (Element sheet : sheets) {
-            if (sheet.getText().toString().matches(element)) {
+        for (Element entry : Elements) {
+            if (entry.getText().toString().matches(element)) {
                 containsDuplicates = true;
                 Log.d(TAG, "Cannot add duplicate sheet elements");
+            }
+            else{
+                Log.d(TAG, "Does not add duplicates");
             }
         }
 

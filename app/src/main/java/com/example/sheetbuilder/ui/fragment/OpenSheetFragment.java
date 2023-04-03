@@ -266,7 +266,6 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
         void bind(Sheet sheet){
             String name = sheet.getName();
             mSheetTextView.setText(name);
-            mSheetImageView.setVisibility(View.GONE);
         }
 
     }
@@ -295,8 +294,7 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
             holder.itemView.setSelected(selectedPos == pos);
 
             Timber.tag(TAG).d("Called onBindViewHolder");
-            if(lastClickedPosition == pos)
-            {
+            if(lastClickedPosition == pos) {
                 //Displays Pointer next to Selected Item
                 holder.mSheetImageView.setVisibility(View.VISIBLE);
             }

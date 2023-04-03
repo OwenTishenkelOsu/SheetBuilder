@@ -16,9 +16,9 @@
 
     <ImageView
         android:id="@+id/fp_selector"
-        android:layout_width="wrap_content"
+        android:layout_width="47dp"
         android:layout_height="match_parent"
-        android:src="@drawable/finger_pointer" />
+        android:src="@drawable/sword_pointer" />
 
 
 </LinearLayout>
