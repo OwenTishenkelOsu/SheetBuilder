@@ -142,16 +142,9 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
         et.setText("New Element");
         ViewGroup.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         et.setLayoutParams(params);
-        editTexts.add(et);
+
         //touch listener to track current edit text
-        et.setOnTouchListener(new View.OnTouchListener()
-        {
-            public boolean onTouch(View arg0, MotionEvent arg1)
-            {
-                evalue=editTexts.indexOf(et);
-                return false;
-            }
-        });
+
 
         //editTexts.add(et);
         //l.addView(et);
@@ -194,6 +187,15 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
                                 mElement = e;
                             }
                         }
+                    }
+                });
+                editTexts.add(et);
+                et.setOnTouchListener(new View.OnTouchListener()
+                {
+                    public boolean onTouch(View arg0, MotionEvent arg1)
+                    {
+                        evalue=editTexts.indexOf(et);
+                        return false;
                     }
                 });
             }
