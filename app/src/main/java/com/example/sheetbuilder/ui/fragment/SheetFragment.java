@@ -187,15 +187,7 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
                                 mElement = e;
                             }
                         }
-                    }
-                });
-                editTexts.add(et);
-                et.setOnTouchListener(new View.OnTouchListener()
-                {
-                    public boolean onTouch(View arg0, MotionEvent arg1)
-                    {
                         evalue=editTexts.indexOf(et);
-                        return false;
                     }
                 });
             }
