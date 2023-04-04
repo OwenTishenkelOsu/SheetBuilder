@@ -16,10 +16,10 @@ import java.util.Locale;
 
 public class SpeechToText {
     private static final int REQUEST_CODE_SPEECH_INPUT = 1;
-    private String output = "";
+    private static String output = "";
     private SpeechRecognizer speechRecognizer;
     private Intent intent;
-    private boolean listening = false;
+    private static boolean listening = false;
     private Activity activity;
     public  SpeechToText(Activity activity) {
         this.activity = activity;
@@ -31,6 +31,7 @@ public class SpeechToText {
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE,
                 Locale.getDefault());
         intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak to text");
+
         speechRecognizer.setRecognitionListener(new RecognitionListener() {
             @Override
             public void onReadyForSpeech(Bundle bundle) {
@@ -100,6 +101,6 @@ public class SpeechToText {
     }
     public String retrieveText(){
         //Returns empty string if nothing was recorded
-        return output;
+        return this.output;
     }
 }

@@ -130,7 +130,7 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
             activity.finish();
         } else if(vId == R.id.voice_button){
             speechToText = new SpeechToText(requireActivity());
-            if(speechToText.listen()){
+            if(!speechToText.listen()){
                 editTexts.get(evalue).setText(speechToText.retrieveText());
             }
 
