@@ -62,6 +62,7 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
         pageTitle = this.getArguments().getString("name");
         sheetID = this.getArguments().getInt("id");
         userID = this.getArguments().getString("userid");
+        speechToText = new SpeechToText(requireActivity());
 
         Activity activity = requireActivity();
         mElementViewModel = new ElementViewModel(activity.getApplication());
@@ -129,7 +130,6 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
             startActivity(intent);
             activity.finish();
         } else if(vId == R.id.voice_button){
-            speechToText = new SpeechToText(requireActivity());
             if(!speechToText.listen()){
                 editTexts.get(evalue).setText(speechToText.retrieveText());
             }
