@@ -1,8 +1,11 @@
 package com.example.sheetbuilder.ui.fragment;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -34,6 +37,8 @@ import com.example.sheetbuilder.ui.activity.OpenSheetActivity;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 import java.util.Set;
 
 import timber.log.Timber;
@@ -55,6 +60,7 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
     private SpeechToText speechToText;
     private Element mElement;
     private String userID;
+    private static final int REQUEST_CODE_SPEECH_INPUT = 1;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -130,8 +136,19 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
             startActivity(intent);
             activity.finish();
         } else if(vId == R.id.voice_button){
-            if(!speechToText.listen()){
-                editTexts.get(evalue).setText(speechToText.retrieveText());
+            Intent intent
+                    = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                    RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE,
+                    Locale.getDefault());
+            intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak to text");
+
+            try {
+                startActivityForResult(intent, REQUEST_CODE_SPEECH_INPUT);
+            }
+            catch (Exception e) {
+                Timber.tag(TAG).d("ERROR, Speech to Text: "+e.toString());
             }
 
         }
@@ -236,5 +253,17 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
     public void onDestroy(){
         super.onDestroy();
         Timber.tag(TAG).d("OnDestroy()");
+    }
+    public void onActivityResult(int requestCode, int resultCode,
+                                 @Nullable Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_SPEECH_INPUT) {
+            if (resultCode == RESULT_OK && data != null) {
+                ArrayList<String> result = data.getStringArrayListExtra(
+                        RecognizerIntent.EXTRA_RESULTS);
+                editTexts.get(evalue).setText(Objects.requireNonNull(result).get(0));
+            }
+        }
     }
 }
