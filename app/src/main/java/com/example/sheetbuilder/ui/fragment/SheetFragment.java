@@ -3,9 +3,6 @@ package com.example.sheetbuilder.ui.fragment;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.speech.RecognitionListener;
-import android.speech.RecognizerIntent;
-import android.speech.SpeechRecognizer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -37,7 +34,6 @@ import com.example.sheetbuilder.ui.activity.OpenSheetActivity;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 
 import timber.log.Timber;
@@ -54,15 +50,11 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
     private String pageTitle;
     private ElementViewModel mElementViewModel;
     private int sheetID;
-    SpeechRecognizer speechRecognizer;
+
     private int evalue;
-    String textToSpeechOutput = "placeholder";
-    //private SpeechToText speechToText;
-    private boolean waitingForResults = false;
-    private boolean listening = false;
+    private SpeechToText speechToText;
     private Element mElement;
     private String userID;
-    private Button voiceButton;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,11 +62,9 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
         pageTitle = this.getArguments().getString("name");
         sheetID = this.getArguments().getInt("id");
         userID = this.getArguments().getString("userid");
-        //speechToText = new SpeechToText(requireActivity());
+        speechToText = new SpeechToText(requireActivity());
 
         Activity activity = requireActivity();
-        speechRecognizer = SpeechRecognizer.createSpeechRecognizer(activity);
-        speechRecognizer.setRecognitionListener(new speechListener());
         mElementViewModel = new ElementViewModel(activity.getApplication());
         mElementViewModel.mRepository.loadElements(Integer.toString(sheetID), ()-> showElements());
     }
@@ -110,7 +100,7 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
         if(backButton!= null){
             backButton.setOnClickListener(this);
         }
-        voiceButton = v.findViewById(R.id.voice_button);
+        final Button voiceButton = v.findViewById(R.id.voice_button);
         if(voiceButton!= null){
             voiceButton.setOnClickListener(this);
         }
@@ -140,19 +130,9 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
             startActivity(intent);
             activity.finish();
         } else if(vId == R.id.voice_button){
-            if(waitingForResults){
-                speechRecognizer.stopListening();
-                editTexts.get(evalue).setText(textToSpeechOutput);
-            } else {
-                Intent speechIntent  = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                speechIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                        RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-                speechIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE,
-                        Locale.getDefault());
-                speechRecognizer.startListening(speechIntent);
+            if(!speechToText.listen()){
+                editTexts.get(evalue).setText(speechToText.retrieveText());
             }
-
-
 
         }
     }
@@ -257,31 +237,4 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
         super.onDestroy();
         Timber.tag(TAG).d("OnDestroy()");
     }
-    public class speechListener implements RecognitionListener {
-        public void onRmsChanged(float rmsdB) { }
-        public void onBufferReceived(byte[] buffer){ }
-        public void onPartialResults(Bundle partialResults) { }
-        public void onEvent(int eventType, Bundle params) { }
-        public void onBeginningOfSpeech() { }
-
-        public void onReadyForSpeech(Bundle params) {
-            waitingForResults = true;
-        }
-
-        public void onEndOfSpeech() {
-            voiceButton.setText("Wait for Results");
-        }
-
-        public void onResults(Bundle results) {
-            ArrayList<String> data = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-            textToSpeechOutput = data.get(0);
-            voiceButton.setText("Speech to Text");
-            waitingForResults = false;
-        }
-
-        public void onError(int error) {
-            Timber.tag(TAG).d("ERROR Speech to TEXT: "+error);
-        }
-    }
-
 }
