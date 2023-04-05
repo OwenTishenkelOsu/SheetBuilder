@@ -8,38 +8,27 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DefaultItemAnimator;
 
 import com.example.sheetbuilder.R;
 
-import com.example.sheetbuilder.SpeechToText;
-
 import com.example.sheetbuilder.model.Element;
-import com.example.sheetbuilder.ui.activity.SheetActivity;
 import com.example.sheetbuilder.viewmodel.ElementViewModel;
-import com.example.sheetbuilder.viewmodel.SheetViewModel;
-import com.example.sheetbuilder.ui.activity.LogInActivity;
 import com.example.sheetbuilder.ui.activity.OpenSheetActivity;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Set;
 
 import timber.log.Timber;
 
@@ -57,7 +46,6 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
     private int sheetID;
 
     private int evalue;
-    private SpeechToText speechToText;
     private Element mElement;
     private String userID;
     private static final int REQUEST_CODE_SPEECH_INPUT = 1;
@@ -68,7 +56,6 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
         pageTitle = this.getArguments().getString("name");
         sheetID = this.getArguments().getInt("id");
         userID = this.getArguments().getString("userid");
-        speechToText = new SpeechToText(requireActivity());
 
         Activity activity = requireActivity();
         mElementViewModel = new ElementViewModel(activity.getApplication());
