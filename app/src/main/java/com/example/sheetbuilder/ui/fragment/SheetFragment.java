@@ -147,16 +147,6 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
         ViewGroup.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         et.setLayoutParams(params);
 
-        //touch listener to track current edit text
-
-
-        //editTexts.add(et);
-        //l.addView(et);
-        int i = 0;
-        for(Element e : mElementViewModel.getAllElements()){
-            e.setText(editTexts.get(i).getText().toString());
-            i++;
-        }
         mElementViewModel.mRepository.addElement(et.getText().toString(), Integer.toString(sheetID), () -> showElements());
     }
 
@@ -166,8 +156,7 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
             e.setText(editTexts.get(i).getText().toString());
             i++;
         }
-        //TODO Check for duplicates before saving
-            mElementViewModel.mRepository.saveElements(Integer.toString(sheetID), ()->showElements());
+        mElementViewModel.mRepository.saveElements(Integer.toString(sheetID), ()->showElements());
     }
 
     void showElements(){
@@ -198,19 +187,6 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    //we need to add this to check for duplicates to prevent users from added the same elements
-    boolean checkForDuplicates(List<Element> sheets, String element) {
-
-        boolean containsDuplicates = false;
-        for (Element sheet : sheets) {
-            if (sheet.getText().toString().matches(element)) {
-                containsDuplicates = true;
-                Log.d(TAG, "Cannot add duplicate sheet elements");
-            }
-        }
-
-        return containsDuplicates;
-    }
 
     @Override
     public void onStart(){
