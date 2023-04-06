@@ -82,13 +82,23 @@
             android:text="Save Sheet" />
 
         <Button
+            android:id="@+id/voice_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
+            android:text="Speech to Text" />
+
+        <Button
             android:id="@+id/back_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="100dp"
-            android:layout_marginRight="100dp"
+            android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
             android:backgroundTint="@color/wood_brown"
             android:text="Back" />
+
     </LinearLayout>
 </LinearLayout>
