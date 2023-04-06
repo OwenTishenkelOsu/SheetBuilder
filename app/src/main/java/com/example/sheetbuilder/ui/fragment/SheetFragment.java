@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.sheetbuilder.R;
 
+import com.example.sheetbuilder.VolleyCallBack;
 import com.example.sheetbuilder.model.Element;
 import com.example.sheetbuilder.viewmodel.ElementViewModel;
 import com.example.sheetbuilder.ui.activity.OpenSheetActivity;
@@ -108,13 +109,14 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
         Timber.tag(TAG).d("Received button click!");
 
         if (vId == R.id.add_element_button) {
-            addEditText();
+            saveElements("add");
         }else if(vId==R.id.delete_element_button){
             if(mElement != null) {
-                mElementViewModel.mRepository.deleteElement(mElement, () -> mElementViewModel.mRepository.loadElements(Integer.toString(sheetID), ()->showElements()));
+                saveElements("delete");
+                //mElementViewModel.mRepository.deleteElement(mElement, () -> mElementViewModel.mRepository.loadElements(Integer.toString(sheetID), ()->showElements()));
             }
         }else if (vId == R.id.save_sheet_button) {
-            saveElements();
+            saveElements("save");
         } else if (vId == R.id.back_button) {
             Intent intent = new Intent(activity, OpenSheetActivity.class);
             Bundle b = new Bundle(); //add sheetId and sheetName to bundle for SheetActivity
@@ -146,22 +148,35 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
         et.setText("New Element");
         ViewGroup.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         et.setLayoutParams(params);
+        //editTexts.add(et);
+        //l.addView(et);
 
         mElementViewModel.mRepository.addElement(et.getText().toString(), Integer.toString(sheetID), () -> showElements());
     }
 
-    void saveElements(){
+    void saveElements(String s){
         int i = 0;
         for(Element e : mElementViewModel.getAllElements()){
             e.setText(editTexts.get(i).getText().toString());
             i++;
         }
-        mElementViewModel.mRepository.saveElements(Integer.toString(sheetID), ()->showElements());
+        if(s.equals("add")) {
+            mElementViewModel.mRepository.saveElements(Integer.toString(sheetID), () -> addEditText());
+        }else if(s.equals("delete")){
+            mElementViewModel.mRepository.saveElements(Integer.toString(sheetID), () -> deleteElement());
+        }else if(s.equals("save")){
+            mElementViewModel.mRepository.saveElements(Integer.toString(sheetID), () -> showElements());
+        }
+    }
+
+    void deleteElement(){
+        mElementViewModel.mRepository.deleteElement(mElement, () -> mElementViewModel.mRepository.loadElements(Integer.toString(sheetID), ()->showElements()));
     }
 
     void showElements(){
         mElementList = mElementViewModel.getAllElements();
         l.removeAllViews();
+        editTexts.clear();
         Timber.tag(TAG).d("SheetList contents: " + mElementList);
         if(mElementList!= null){
             for(Element e : mElementList){

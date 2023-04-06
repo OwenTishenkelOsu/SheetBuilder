@@ -32,6 +32,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class ElementRepository {
     FirebaseFirestore db;
     private final List<Element> mElementList = new CopyOnWriteArrayList<>();
+    private final List<String> idList = new CopyOnWriteArrayList<>();
     private final String TAG = getClass().getSimpleName();
     public Map<String, Object> result = new HashMap<>();
     public int id;
@@ -45,6 +46,8 @@ public class ElementRepository {
     }
 
     public void addElement(String text, String sheetID, VolleyCallBack callBack){
+
+        findAvailableId();
 
         mElementList.add(new Element(text, Integer.toString(id), sheetID));
         Map<String, Object> element = new HashMap<>();
@@ -106,10 +109,17 @@ public class ElementRepository {
                 });
     }
 
+    public void findAvailableId(){
+        while(idList.contains(Integer.toString(id))){
+            id++;
+        }
+    }
+
 
 
     public void loadElements(String sheetId, VolleyCallBack callBack){
         mElementList.clear();
+        idList.clear();
 
         db.collection("element").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -120,6 +130,7 @@ public class ElementRepository {
                         String s = "";
                         String text = "";
                         String i = document.getId();
+                        idList.add(i);
                         for(Map.Entry e:document.getData().entrySet()){
                             if(e.getKey().toString().equals("sheetID")){
                                 s = e.getValue().toString();
