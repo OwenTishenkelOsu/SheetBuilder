@@ -103,7 +103,7 @@
                 android:text="Rename" />
         </LinearLayout>
 
-            <Button
+        <Button
             android:id="@+id/sign_out_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

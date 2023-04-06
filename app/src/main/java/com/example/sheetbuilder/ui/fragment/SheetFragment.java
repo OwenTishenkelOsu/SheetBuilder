@@ -160,6 +160,7 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
             e.setText(editTexts.get(i).getText().toString());
             i++;
         }
+
         if(s.equals("add")) {
             mElementViewModel.mRepository.saveElements(Integer.toString(sheetID), () -> addEditText());
         }else if(s.equals("delete")){
@@ -171,6 +172,7 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
 
     void deleteElement(){
         mElementViewModel.mRepository.deleteElement(mElement, () -> mElementViewModel.mRepository.loadElements(Integer.toString(sheetID), ()->showElements()));
+
     }
 
     void showElements(){
@@ -201,6 +203,7 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
             }
         }
     }
+
 
 
     @Override

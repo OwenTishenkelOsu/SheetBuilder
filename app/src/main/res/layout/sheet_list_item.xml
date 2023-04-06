@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView
-    android:id="@+id/sheet_info"
-    android:text="Sheet Info"
-    android:layout_width="match_parent"
+
+<LinearLayout
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginTop="16dp"
-    android:layout_marginBottom="16dp"
-    android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp"
-    xmlns:android="http://schemas.android.com/apk/res/android"/>
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/sheet_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sheet Info"
+        android:textSize="18dp" />
+
+    <ImageView
+        android:id="@+id/fp_selector"
+        android:layout_width="47dp"
+        android:layout_height="match_parent"
+        android:src="@drawable/sword_pointer" />
+
+
+</LinearLayout>

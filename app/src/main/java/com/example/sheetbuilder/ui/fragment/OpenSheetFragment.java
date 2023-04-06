@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.sql.Array;
 import java.util.List;
 
 import com.example.sheetbuilder.model.Sheet;
@@ -177,7 +179,7 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
             mSheetViewModel.mRepository.deleteSheet(mSheet, ()->mSheetViewModel.mRepository.loadSheets(userID, ()-> showSheets()));
         }else if(vId == R.id.create_sheet_button){
             //This checks to see if the sheet name is empty or just a bunch of whitespace
-            if(sheetname.getText().toString().matches("") || sheetname.getText().toString().trim().length()==0) {
+            if(sheetname.getText().toString().trim().length()==0) {
                 Toast.makeText(activity, "You cannot enter an empty sheet name", Toast.LENGTH_SHORT).show();
             }
             else {
@@ -252,11 +254,14 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
 
     private static class SheetHolder extends RecyclerView.ViewHolder {
         private final TextView mSheetTextView;
+        private final ImageView mSheetImageView;
+
         View v;
         SheetHolder(LayoutInflater inf, ViewGroup parent){
             super(inf.inflate(R.layout.sheet_list_item, parent, false));
 
             mSheetTextView = itemView.findViewById(R.id.sheet_info);
+            mSheetImageView = itemView.findViewById(R.id.fp_selector);
         }
         void bind(Sheet sheet){
             String name = sheet.getName();
@@ -269,6 +274,8 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
         private final List<Sheet> mSheetList;
         private int selectedPos = RecyclerView.NO_POSITION;
 
+        private int lastClickedPosition = -1;
+
         SheetAdapter(List<Sheet> sheetList) {mSheetList = sheetList;}
 
         @NonNull
@@ -276,6 +283,9 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
         public SheetHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
             LayoutInflater inf = requireActivity().getLayoutInflater();
             return new SheetHolder(inf, parent);
+
+
+
         }
         @Override
         public void onBindViewHolder(@NonNull SheetHolder holder, int pos){
@@ -283,12 +293,31 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
             holder.bind(sheet);
             holder.itemView.setSelected(selectedPos == pos);
 
+            Timber.tag(TAG).d("Called onBindViewHolder");
+            if(lastClickedPosition == pos) {
+                //Displays Pointer next to Selected Item
+                holder.mSheetImageView.setVisibility(View.VISIBLE);
+            }
+            else{
+                //this makes the pointer disappear
+                holder.mSheetImageView.setVisibility(View.GONE);
+            }
+
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Timber.tag(TAG).d(sheet.getName());
-                    Toast.makeText(getContext(), sheet.getName(), Toast.LENGTH_SHORT).show();
                     mSheet = sheet;
+
+                    if(lastClickedPosition != -1)
+                    {
+                        //this calls onBindViewHolder with the last Clicked Item Position
+                        notifyItemChanged(lastClickedPosition);
+                    }
+                    //this resets the last clicked position to the currently selected item
+                    //And finally makes the pointer visible that is currently selected
+                    lastClickedPosition = holder.getAdapterPosition();
+                    notifyItemChanged(lastClickedPosition);
                 }
             });
         }
