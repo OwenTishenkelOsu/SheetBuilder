@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/container"
+    android:orientation="horizontal">
+
+
+    <LinearLayout
+        android:layout_width="367dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:padding="4dp"
+            android:text="Sheet title"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="@color/light_brown"
+            android:textSize="24sp"
+            android:textStyle="bold|italic" />
+
+
+<!--        <ScrollView-->
+<!--            android:id="@+id/scroll_view"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="289dp"-->
+<!--            tools:ignore="Orientation">-->
+
+<!--        </ScrollView>-->
+
+        <LinearLayout
+            android:id="@+id/list"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="25dp"
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/add_element_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
+            android:backgroundTint="@color/cream"
+            android:text="Add Element" />
+        <Button
+            android:id="@+id/delete_element_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
+            android:backgroundTint="@color/cream"
+            android:text="Delete Selected" />
+        <Button
+            android:id="@+id/save_sheet_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
+            android:backgroundTint="@color/cream"
+            android:text="Save Sheet" />
+
+        <Button
+            android:id="@+id/voice_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
+            android:text="Speech to Text" />
+
+        <Button
+            android:id="@+id/back_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
+            android:backgroundTint="@color/wood_brown"
+            android:text="Back" />
+    </LinearLayout>
+
+</LinearLayout>

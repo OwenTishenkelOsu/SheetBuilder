@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -90,7 +91,7 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
 
         userID = this.getArguments().getString("userid");
         mSheetViewModel = new SheetViewModel(activity.getApplication());
-        mSheetViewModel.mRepository.loadSheets(userID, ()-> showSheets());
+        mSheetViewModel.mRepository.loadSheets(userID, ()-> showSheets()); //loads sheets using userID then displays them
     }
 
     public View onCreateView(@NonNull LayoutInflater inf, ViewGroup c, Bundle savedInstanceState){
@@ -104,10 +105,18 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
 
         Activity activity = requireActivity();
 
-        v = inf.inflate(R.layout.open_sheet_fragment, c, false);
+        int rotation = activity.getWindowManager().getDefaultDisplay().getRotation(); //check rotation for display
+
+        if (rotation == Surface.ROTATION_90 || rotation == Surface.ROTATION_270) {
+            v = inf.inflate(R.layout.open_sheet_fragment_land, c, false);
+        } else {
+            v = inf.inflate(R.layout.open_sheet_fragment, c, false);
+        }
+
+        //v = inf.inflate(R.layout.open_sheet_fragment, c, false);
 
         pageName = v.findViewById(R.id.page_title);
-        pageName.setText(sheetUserName);
+        pageName.setText(sheetUserName); //sets pageName to be the name of user
 
         /*ArrayAdapter<String> t;
         t = new ArrayAdapter<String>(v.getContext(), R.layout.simple_list_item_1, temps);
@@ -245,6 +254,7 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
         Timber.tag(TAG).d("in showSheets()");
         mSheetList = mSheetViewModel.getAllSheets();
         Timber.tag(TAG).d("SheetList contents: " + mSheetList);
+        //creates new adapter for sheets
         if(mSheetList!= null){
             mSheetAdapter = new SheetAdapter(mSheetList);
             mSheetRecyclerView.setAdapter(mSheetAdapter);

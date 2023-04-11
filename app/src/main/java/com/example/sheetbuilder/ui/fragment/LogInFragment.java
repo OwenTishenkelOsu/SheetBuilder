@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -74,7 +75,15 @@ public class LogInFragment extends Fragment implements View.OnClickListener {
         Timber.tag(TAG).d("onCreateView()");
         Activity activity = requireActivity();
 
-        v = inf.inflate(R.layout.login_fragment, c, false);
+        int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
+
+        if (rotation == Surface.ROTATION_90 || rotation == Surface.ROTATION_270) {
+            v = inf.inflate(R.layout.login_fragment_land, c, false);
+        } else {
+            v = inf.inflate(R.layout.login_fragment, c, false);
+        }
+
+        //v = inf.inflate(R.layout.login_fragment, c, false);
 
         mGoogleBtn=v.findViewById(R.id.gmail_button);
         mGoogleBtn.setOnClickListener(this);
@@ -118,7 +127,7 @@ public class LogInFragment extends Fragment implements View.OnClickListener {
                 task.getResult(ApiException.class);
                 Timber.tag(TAG).d("google CompleteTask is Successful");
                 account = task.getResult();
-                createUser();
+                createUser(); //when Google login succeeds, creates/checks user exists in db
             } catch (ApiException e) {
                 Timber.tag(TAG).d("Sign in Result to Google: failed code" + e.getStatusCode());
             }
@@ -127,6 +136,7 @@ public class LogInFragment extends Fragment implements View.OnClickListener {
 
     private void createUser(){
         Timber.tag(TAG).d("CREATING USER");
+        //loads users, then creates new user if user does not already exist, then finishes signin
         mUserViewModel.mRepository.loadUsers(()->mUserViewModel.mRepository.createUser(account.getEmail(), ()->finishSignIn(getActivity())));
     }
 
@@ -138,6 +148,7 @@ public class LogInFragment extends Fragment implements View.OnClickListener {
         List<User> mUserList = mUserViewModel.mRepository.getAllUsers();
         String id = "";
         Timber.tag(TAG).d(account.getEmail());
+        //gets the userID from the list of users in order to load user's sheets in next stage
         for(User u : mUserList){
             Timber.tag(TAG).d(u.getEmail());
             if(u.getEmail().equals(account.getEmail())){

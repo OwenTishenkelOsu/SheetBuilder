@@ -31,6 +31,7 @@ public class SheetRepository {
     FirebaseFirestore db;
 
     private final List<Sheet> mSheetList = new CopyOnWriteArrayList<>();
+    private final List<String> idList = new CopyOnWriteArrayList<>();
     private final String TAG = getClass().getSimpleName();
     public Map<String, Object> result = new HashMap<>();
     public int id;
@@ -66,6 +67,7 @@ public class SheetRepository {
         Map<String, Object> sheet = new HashMap<>();
         sheet.put("sheetName", name);
         sheet.put("userID", userID);
+        findAvailableId(); //finds first unused id
         db.collection("sheet").document(Integer.toString(id)).set(sheet).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -97,8 +99,15 @@ public class SheetRepository {
                 });
     }
 
+    public void findAvailableId(){
+        while(idList.contains(Integer.toString(id))){
+            id++;
+        }
+    }
+
     public void loadSheets(String uid, final VolleyCallBack callBack){
-        mSheetList.clear();
+        mSheetList.clear(); //clears mSheetList to repopulate it
+        idList.clear(); //clears idList to repopulate it with accurate ids
         this.userID = uid;
 
         ContentResolver resolver = mContext.getContentResolver();
@@ -112,6 +121,7 @@ public class SheetRepository {
                         String s = "";
                         String uId = "";
                         String i = document.getId();
+                        idList.add(i);
 
 
                         for(Map.Entry e:document.getData().entrySet()){

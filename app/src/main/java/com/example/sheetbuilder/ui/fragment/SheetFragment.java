@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -70,7 +71,16 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
         Timber.tag(TAG).d("onCreateView()");
         Activity activity = requireActivity();
 
-        v = inf.inflate(R.layout.sheet_fragment, c, false);
+        int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
+
+        if (rotation == Surface.ROTATION_90 || rotation == Surface.ROTATION_270) {
+            v = inf.inflate(R.layout.sheet_fragment_land, c, false);
+        } else {
+            v = inf.inflate(R.layout.sheet_fragment, c, false);
+        }
+
+
+        //v = inf.inflate(R.layout.sheet_fragment, c, false);
 
         title = v.findViewById(R.id.title);
         title.setText(pageTitle);
@@ -109,8 +119,10 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
         Timber.tag(TAG).d("Received button click!");
 
         if (vId == R.id.add_element_button) {
+            //before an element can be added, all elements must be saved
             saveElements("add");
         }else if(vId==R.id.delete_element_button){
+            //must save all elements before deleting one
             if(mElement != null) {
                 saveElements("delete");
                 //mElementViewModel.mRepository.deleteElement(mElement, () -> mElementViewModel.mRepository.loadElements(Integer.toString(sheetID), ()->showElements()));
@@ -151,6 +163,7 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
         //editTexts.add(et);
         //l.addView(et);
 
+        //adds a new element to the repo and displays elements in edittexts
         mElementViewModel.mRepository.addElement(et.getText().toString(), Integer.toString(sheetID), () -> showElements());
     }
 
@@ -162,8 +175,11 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
         }
 
         if(s.equals("add")) {
+            //saves elements from the edittexts to the repo before adding to db
+            //otherwise, would have to hit save before add
             mElementViewModel.mRepository.saveElements(Integer.toString(sheetID), () -> addEditText());
         }else if(s.equals("delete")){
+            //saves elements from edittexts before deleting one
             mElementViewModel.mRepository.saveElements(Integer.toString(sheetID), () -> deleteElement());
         }else if(s.equals("save")){
             mElementViewModel.mRepository.saveElements(Integer.toString(sheetID), () -> showElements());
@@ -177,6 +193,7 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
 
     void showElements(){
         mElementList = mElementViewModel.getAllElements();
+        //resets the list view l and edittexts array
         l.removeAllViews();
         editTexts.clear();
         Timber.tag(TAG).d("SheetList contents: " + mElementList);
