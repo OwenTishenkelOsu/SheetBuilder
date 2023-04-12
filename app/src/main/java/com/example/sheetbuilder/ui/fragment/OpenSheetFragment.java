@@ -56,6 +56,8 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
     private String sheetUserName;
     private TextView pageName;
 
+    private ImageView selectSheetButton, deleteSheetButton, createSheetButton, renameSheetButton, signOutButton;
+
     //Google sign in to use across fragment classes LoginFragment and OpenSheetFragment
     private GoogleSignInOptions gSignInOptions;
     private GoogleSignInClient gSignInClient;
@@ -115,6 +117,21 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
 
         //v = inf.inflate(R.layout.open_sheet_fragment, c, false);
 
+        selectSheetButton=v.findViewById(R.id.select_sheet_button);
+        selectSheetButton.setOnClickListener(this);
+
+        deleteSheetButton=v.findViewById(R.id.delete_sheet_button);
+        deleteSheetButton.setOnClickListener(this);
+
+        createSheetButton=v.findViewById(R.id.create_sheet_button);
+        createSheetButton.setOnClickListener(this);
+
+        renameSheetButton=v.findViewById(R.id.rename_sheet_button);
+        renameSheetButton.setOnClickListener(this);
+
+        signOutButton=v.findViewById(R.id.sign_out_button);
+        signOutButton.setOnClickListener(this);
+
         pageName = v.findViewById(R.id.page_title);
         pageName.setText(sheetUserName); //sets pageName to be the name of user
 
@@ -124,27 +141,6 @@ public class OpenSheetFragment extends Fragment implements View.OnClickListener 
         list.setAdapter(t);*/
 
         sheetname = v.findViewById(R.id.sheet_name);
-        final Button selectSheetButton = v.findViewById(R.id.select_sheet_button);
-        if(selectSheetButton!= null){
-            selectSheetButton.setOnClickListener(this);
-        }
-        final Button deleteSheetButton = v.findViewById(R.id.delete_sheet_button);
-        if(deleteSheetButton!= null){
-            deleteSheetButton.setOnClickListener(this);
-        }
-        final Button createSheetButton = v.findViewById(R.id.create_sheet_button);
-        if(createSheetButton!= null){
-            createSheetButton.setOnClickListener(this);
-        }
-        final Button renameSheetButton = v.findViewById(R.id.rename_sheet_button);
-        if(renameSheetButton!= null){
-            renameSheetButton.setOnClickListener(this);
-        }
-        final Button signOutButton = v.findViewById(R.id.sign_out_button);
-        if(signOutButton!= null){
-            signOutButton.setOnClickListener(this);
-        }
-
 
         /*list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,

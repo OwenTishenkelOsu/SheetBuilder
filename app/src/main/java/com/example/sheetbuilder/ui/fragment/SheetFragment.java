@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -47,6 +48,8 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
     private ElementViewModel mElementViewModel;
     private int sheetID;
 
+    private ImageView addElementButton, deleteElementButton, saveSheetButton, voiceButton, backButton;
+
     private int evalue;
     private Element mElement;
     private String userID;
@@ -79,6 +82,21 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
             v = inf.inflate(R.layout.sheet_fragment, c, false);
         }
 
+        addElementButton=v.findViewById(R.id.add_element_button);
+        addElementButton.setOnClickListener(this);
+
+        deleteElementButton=v.findViewById(R.id.delete_element_button);
+        deleteElementButton.setOnClickListener(this);
+
+        saveSheetButton=v.findViewById(R.id.save_sheet_button);
+        saveSheetButton.setOnClickListener(this);
+
+        voiceButton=v.findViewById(R.id.voice_button);
+        voiceButton.setOnClickListener(this);
+
+        backButton=v.findViewById(R.id.back_button);
+        backButton.setOnClickListener(this);
+
 
         //v = inf.inflate(R.layout.sheet_fragment, c, false);
 
@@ -88,26 +106,6 @@ public class SheetFragment extends Fragment implements View.OnClickListener {
         l = v.findViewById(R.id.list);
         editTexts = new ArrayList<EditText>();
 
-        final Button addElementButton = v.findViewById(R.id.add_element_button);
-        if(addElementButton!= null){
-            addElementButton.setOnClickListener(this);
-        }
-        final Button deleteElementButton = v.findViewById(R.id.delete_element_button);
-        if(deleteElementButton!= null){
-            deleteElementButton.setOnClickListener(this);
-        }
-        final Button saveSheetButton = v.findViewById(R.id.save_sheet_button);
-        if(saveSheetButton!= null){
-            saveSheetButton.setOnClickListener(this);
-        }
-        final Button backButton = v.findViewById(R.id.back_button);
-        if(backButton!= null){
-            backButton.setOnClickListener(this);
-        }
-        final Button voiceButton = v.findViewById(R.id.voice_button);
-        if(voiceButton!= null){
-            voiceButton.setOnClickListener(this);
-        }
         return v;
     }
 
