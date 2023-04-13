@@ -8,7 +8,7 @@
 
 
     <LinearLayout
-        android:layout_width="545dp"
+        android:layout_width="392dp"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
@@ -51,20 +51,20 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/add_element_button"
                 android:layout_width="150dp"
-                android:layout_height="100dp"
+                android:layout_height="80dp"
                 android:layout_gravity="center"
                 android:src="@drawable/add_element_btn2" />
 
             <ImageView
                 android:id="@+id/delete_element_button"
                 android:layout_width="150dp"
-                android:layout_height="100dp"
+                android:layout_height="80dp"
                 android:layout_gravity="center"
                 android:src="@drawable/delete_selected_btn2" />
         </LinearLayout>
@@ -77,24 +77,24 @@
             <ImageView
                 android:id="@+id/save_sheet_button"
                 android:layout_width="150dp"
-                android:layout_height="100dp"
+                android:layout_height="80dp"
                 android:layout_gravity="center"
                 android:src="@drawable/save_sheet_btn2" />
 
             <ImageView
                 android:id="@+id/voice_button"
                 android:layout_width="150dp"
-                android:layout_height="100dp"
+                android:layout_height="80dp"
                 android:layout_gravity="center"
                 android:src="@drawable/speech_to_text_btn2" />
         </LinearLayout>
 
         <ImageView
             android:id="@+id/back_button"
-            android:layout_width="270dp"
-            android:layout_height="100dp"
+            android:layout_width="250dp"
+            android:layout_height="80dp"
             android:layout_gravity="center"
-            android:layout_marginRight="100dp"
+            android:layout_marginRight="110dp"
             android:src="@drawable/back_btn" />
     </LinearLayout>
 </LinearLayout>
