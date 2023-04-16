@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class UserTest {
 
-    User testUser = new User("testUser@gmail.com", "1");
+    private User testUser = new User("testUser@gmail.com", "1");
 
     @Test
     public void getEmail() {
