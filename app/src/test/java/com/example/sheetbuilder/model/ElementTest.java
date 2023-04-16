@@ -12,21 +12,18 @@ public class ElementTest {
     @Test
     public void getText() {
         assertEquals(ElementToTest.getText(), "Strength");
-        assertNotEquals(ElementToTest.getText(), "");
     }
 
     @Test
     public void getId() {
         assertEquals(ElementToTest.getId(), "1");
-        assertNotEquals(ElementToTest.getId(), "2");
     }
 
     @Test
     public void setText() {
         String newText = "Agility";
+        assertEquals(ElementToTest.getText(), "Strength"); //before
         ElementToTest.setText(newText);
-
-        assertEquals(ElementToTest.getText(), "Agility");
-        assertNotEquals(ElementToTest.getText(), "Strength");
+        assertEquals(ElementToTest.getText(), "Agility"); //after
     }
 }
