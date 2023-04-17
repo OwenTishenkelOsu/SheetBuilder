@@ -1,7 +1,9 @@
-package com.example.sheetbuilder.model;
+package com.example.sheetbuilder;
 
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertNotEquals;
+
+import com.example.sheetbuilder.model.Element;
 
 import org.junit.Test;
 

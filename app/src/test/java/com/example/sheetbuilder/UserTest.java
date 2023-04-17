@@ -1,6 +1,8 @@
-package com.example.sheetbuilder.model;
+package com.example.sheetbuilder;
 
 import static org.junit.Assert.*;
+
+import com.example.sheetbuilder.model.User;
 
 import org.junit.Test;
 
